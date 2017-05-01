@@ -4,28 +4,45 @@
 
 package com.tphien.midproject1412171.Modal;
 
-import android.graphics.Bitmap;
-
-
 
 public class Restaurant {
+    //Name,Address,Website,Phone,Email,Rating,Reviews,URL
+
     private String name = "";
     private String  address = "";
-    private int     rate = 0;
+    private String linkWebsite = "";
     private String phoneNumber = "";
     private String email = "";
-    private String linkWebsite = "";
+    private int rating = 0;
+    private String review = "";
+    private String url = "";
     private double lat = 0f;
     private double lon = 0f;
+
     private int[] idAvatars = new int[0];
     private int curPosAvatar = 0;
-    private String description = "";
 
     public Restaurant(String name, String address, int[] idAvatars) {
         this.name = name;
         this.address = address;
         this.idAvatars = idAvatars;
     }
+
+    public Restaurant(String name, String address, String website, String phone, String email,
+                      int rating, String review, String url, double lat, double lon, int[] idAvatars) {
+        this.name = name;
+        this.address = address;
+        this.linkWebsite = website;
+        this.phoneNumber = phone;
+        this.email = email;
+        this.rating = rating;
+        this.review = review;
+        this.url= url;
+        this.lat = lat;
+        this.lon = lon;
+        this.idAvatars = idAvatars;
+    }
+
 
     public String getName() {
         return name;
@@ -75,14 +92,6 @@ public class Restaurant {
         this.lon = lon;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -91,12 +100,12 @@ public class Restaurant {
         this.address = address;
     }
 
-    public int getRate() {
-        return rate;
+    public int getRating() {
+        return rating;
     }
 
-    public void setRate(int rate) {
-        this.rate = rate;
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     public int[] getIdAvatars() {

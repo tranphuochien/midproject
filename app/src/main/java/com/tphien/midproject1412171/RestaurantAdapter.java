@@ -11,6 +11,7 @@ import android.os.CountDownTimer;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -18,15 +19,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tphien.midproject1412171.Modal.Restaurant;
+import com.tphien.midproject1412171.tool.CircleTransform;
 
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-
 
 public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
     private final Context context;
@@ -41,7 +44,7 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
         TextView tvName;
         TextView tvAddress;
         CircleImageView imgViewCircle;
-        Button btnDetail;
+        ImageButton btnDetail;
     }
     public void selectedItem(int position)
     {
@@ -66,7 +69,15 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
             vh.tvName = (TextView) convertView.findViewById(R.id.tvName);
             vh.tvAddress = (TextView) convertView.findViewById(R.id.tvPhoneNumber);
             vh.imgViewCircle = (CircleImageView) convertView.findViewById(R.id.imageViewAvatar);
-            vh.btnDetail = (Button) convertView.findViewById(R.id.detailBut);
+            vh.btnDetail = (ImageButton) convertView.findViewById(R.id.detailBut);
+
+            Glide.with(context.getApplicationContext()).load("android.resource://com.tphien.midproject1412171/drawable/arrow_right")
+                    .crossFade()
+                    .thumbnail(0.5f)
+                    .bitmapTransform(new CircleTransform(context.getApplicationContext()))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(vh.btnDetail);
+            vh.btnDetail.setBackgroundColor(Color.TRANSPARENT);
 
             // Cache the viewHolder object inside the fresh view
             convertView.setTag(vh);
@@ -166,4 +177,6 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
             }
         }.start();
     }
+
+
 }
