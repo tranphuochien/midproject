@@ -1,7 +1,9 @@
 package com.tphien.midproject1412171.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -42,6 +44,7 @@ public class HomeFragment extends Fragment {
     private int postLast;
     private static final int MAX = 100;
     private static final int BUFFER = 10;
+    private boolean isLoadedData = false;
     private static Context context;
     private TextView tvCurPos;
     private TextView tvResult;
@@ -93,18 +96,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadData() {
-        /*int []idAvatars = {R.drawable.avatar, R.drawable.avatar2, R.drawable.avatar3};
-
-        for (int i = 0; i < MAX; i++) {
-            dataBank.add(new Restaurant("Nhà hàng " + i, "cống quỳnh", idAvatars));
-        }*/
-
-        InputStream inputStream = getResources().openRawResource(R.raw.data_restaurants);
-        try {
-            dataBank = new MyReaderJson().read(inputStream);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        LoadDataTask loadDataTask = new LoadDataTask(context);
+        loadDataTask.execute();
     }
 
     private void updateBufferData() {
@@ -136,10 +129,10 @@ public class HomeFragment extends Fragment {
         dataBank = new ArrayList<>();
         bufferData = new ArrayList<>();
 
-        //Load data into data bank
+        //Load data into data bank and load first buffer data
         loadData();
 
-        updateBufferData();
+
         restaurantAdapter = new RestaurantAdapter(context, bufferData);
 
         //Process listView
@@ -160,11 +153,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem,
                                  int visibleItemCount, int totalItemCount) {
-                if (listView.getLastVisiblePosition() == listView.getAdapter().getCount() - 1
-                        && listView.getChildAt(listView.getChildCount() - 1).getBottom() <= listView.getHeight()) {
-                    Toast.makeText(context, "end", Toast.LENGTH_SHORT).show();
-                    updateBufferData();
-                    restaurantAdapter.notifyDataSetChanged();
+                if (isLoadedData) {
+                    if (listView.getLastVisiblePosition() == listView.getAdapter().getCount() - 1
+                            && listView.getChildAt(listView.getChildCount() - 1).getBottom() <= listView.getHeight()) {
+                        Toast.makeText(context, "end", Toast.LENGTH_SHORT).show();
+                        updateBufferData();
+                        restaurantAdapter.notifyDataSetChanged();
+                    }
                 }
             }
         });
@@ -205,6 +200,7 @@ public class HomeFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         Glide.get(context).clearMemory();
+        isLoadedData = false;
     }
 
     /**
@@ -220,5 +216,62 @@ public class HomeFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private class LoadDataTask extends AsyncTask<Void, Void, ArrayList<Restaurant>> {
+        private ProgressDialog pd;
+        private Context context;
+
+        LoadDataTask(Context context){
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pd = new ProgressDialog(context);
+            pd.setMessage("Loading data...");
+            pd.setIndeterminate(false);
+            pd.setCancelable(false);
+            pd.show();
+        }
+
+        @Override
+        protected ArrayList<Restaurant> doInBackground(Void... voids) {
+            InputStream inputStream = getResources().openRawResource(R.raw.data_restaurants);
+            ArrayList<Restaurant> items = new ArrayList<>();
+            try {
+                items = new MyReaderJson().read(inputStream);
+            } catch (JSONException e) {
+                e.printStackTrace();
+
+                //Canot read data from json file -> create dummy data
+                items.add(new Restaurant());
+
+                return items;
+            }
+
+            return items;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Restaurant> restaurants) {
+            super.onPostExecute(restaurants);
+
+            dataBank = restaurants;
+            updateBufferData();
+            restaurantAdapter.notifyDataSetChanged();
+            isLoadedData = true;
+
+            if (pd != null)
+            {
+                pd.dismiss();
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ package com.tphien.midproject1412171;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
@@ -27,6 +28,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tphien.midproject1412171.Modal.Restaurant;
 import com.tphien.midproject1412171.tool.CircleTransform;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -123,12 +125,10 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
         vh.btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ContactsContract.Profile.class );
-
-                intent.putExtra("phoneNumber", getItem(position).getAddress());
-                intent.putExtra("name", getItem(position).getName());
-                intent.putExtra("email", getItem(position).getEmail());
-                intent.putExtra("idAvatar", getItem(position).getIdAvatars()[getItem(position).getCurPosAvatar()]);
+                Intent intent = new Intent(context, RestaurantProfile.class );
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("restaurant_info", (Serializable) getItem(position));
+                intent.putExtras(bundle);
                 context.startActivity(intent);
             }
         });

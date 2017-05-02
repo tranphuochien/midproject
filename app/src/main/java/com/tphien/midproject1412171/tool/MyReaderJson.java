@@ -70,8 +70,8 @@ public class MyReaderJson {
             if (!object.isNull("reviews")) {
                 review = object.getString("reviews");
             }
-            if (!object.isNull("url")) {
-                url = object.getString("url");
+            if (!object.isNull("URL")) {
+                url = object.getString("URL");
             }
             if (!object.isNull("lat")) {
                 lat = object.getDouble("lat");

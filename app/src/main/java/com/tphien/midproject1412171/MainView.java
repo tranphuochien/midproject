@@ -30,7 +30,6 @@ import com.tphien.midproject1412171.map.MapView;
 import com.tphien.midproject1412171.tool.CircleTransform;
 
 public class MainView extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener {
-
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private View navHeader;
@@ -182,9 +181,6 @@ public class MainView extends AppCompatActivity implements HomeFragment.OnFragme
             case 0:
                 // home
                 return new HomeFragment(MainView.this);
-            case 1:
-                // photos
-                return new PhotosFragment();
             case 2:
                 // movies fragment
                 return new MoviesFragment();
@@ -221,7 +217,7 @@ public class MainView extends AppCompatActivity implements HomeFragment.OnFragme
                         navItemIndex = 0;
                         CURRENT_TAG = TAG_HOME;
                         break;
-                    case R.id.nav_photos:
+                    case R.id.nav_map:
                         //navItemIndex = 1;
                         //CURRENT_TAG = TAG_PHOTOS;
                         startActivity(new Intent(MainView.this, MapView.class));

@@ -5,17 +5,22 @@
 package com.tphien.midproject1412171.Modal;
 
 
-public class Restaurant {
-    //Name,Address,Website,Phone,Email,Rating,Reviews,URL
+import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.clustering.ClusterItem;
 
-    private String name = "";
-    private String  address = "";
-    private String linkWebsite = "";
-    private String phoneNumber = "";
-    private String email = "";
+import java.io.Serializable;
+
+public class Restaurant implements ClusterItem, Serializable {
+    //Name,Address,Website,Phone,Email,Rating,Reviews,URL
+    private String NO_INFO ="No info";
+    private String name = NO_INFO;
+    private String  address = NO_INFO;
+    private String linkWebsite = NO_INFO;
+    private String phoneNumber = NO_INFO;
+    private String email = NO_INFO;
     private int rating = 0;
-    private String review = "";
-    private String url = "";
+    private String review = NO_INFO;
+    private String url = NO_INFO;
     private double lat = 0f;
     private double lon = 0f;
 
@@ -28,16 +33,18 @@ public class Restaurant {
         this.idAvatars = idAvatars;
     }
 
+    public Restaurant() {}
+
     public Restaurant(String name, String address, String website, String phone, String email,
                       int rating, String review, String url, double lat, double lon, int[] idAvatars) {
         this.name = name;
-        this.address = address;
-        this.linkWebsite = website;
+        if (address.length() > 0) {this.address = address;}
+        if (website.length() > 0) {this.linkWebsite = website;}
         this.phoneNumber = phone;
-        this.email = email;
+        if (email.length() > 0) {this.email = email; }
         this.rating = rating;
-        this.review = review;
-        this.url= url;
+        if (review.length() > 0) {this.review = review;}
+        if (url.length() > 0) {this.url= url;}
         this.lat = lat;
         this.lon = lon;
         this.idAvatars = idAvatars;
@@ -122,5 +129,37 @@ public class Restaurant {
 
     public void setCurPosAvatar(int curPosAvatar) {
         this.curPosAvatar = curPosAvatar;
+    }
+
+    public int getCurAvatar() {return idAvatars[curPosAvatar];}
+    @Override
+    public LatLng getPosition() {
+        return new LatLng(lat, lon);
+    }
+
+    @Override
+    public String getTitle() {
+        return null;
+    }
+
+    @Override
+    public String getSnippet() {
+        return null;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
