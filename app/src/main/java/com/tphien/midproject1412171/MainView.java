@@ -1,26 +1,39 @@
 package com.tphien.midproject1412171;
 
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.tphien.midproject1412171.Modal.Restaurant;
 import com.tphien.midproject1412171.fragment.HomeFragment;
 import com.tphien.midproject1412171.fragment.MoviesFragment;
 import com.tphien.midproject1412171.fragment.NotificationsFragment;
@@ -28,14 +41,21 @@ import com.tphien.midproject1412171.fragment.PhotosFragment;
 import com.tphien.midproject1412171.fragment.SettingsFragment;
 import com.tphien.midproject1412171.map.MapView;
 import com.tphien.midproject1412171.tool.CircleTransform;
+import com.tphien.midproject1412171.tool.MyReaderJson;
 
-public class MainView extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener {
+import org.json.JSONException;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+
+public class MainView extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private View navHeader;
     private ImageView imgNavHeaderBg, imgProfile;
     private TextView txtName, txtWebsite;
     private Toolbar toolbar;
+    private static Fragment curFragment;
 
     // urls to load navigation header background image
     // and profile image
@@ -83,7 +103,6 @@ public class MainView extends AppCompatActivity implements HomeFragment.OnFragme
 
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
-
 
 
         // load nav menu header data
@@ -155,12 +174,12 @@ public class MainView extends AppCompatActivity implements HomeFragment.OnFragme
             @Override
             public void run() {
                 // update the main content by replacing fragments
-                Fragment fragment = getHomeFragment();
+                curFragment = getHomeFragment();
 
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                         android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
+                fragmentTransaction.replace(R.id.frame, curFragment, CURRENT_TAG);
                 fragmentTransaction.commitAllowingStateLoss();
             }
         };
@@ -330,11 +349,53 @@ public class MainView extends AppCompatActivity implements HomeFragment.OnFragme
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        int brightness;
+        //Content resolver used as a handle to the system's settings
+        ContentResolver cResolver;
+        //Window object, that will store a reference to the current window
+        Window window;
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
-            Toast.makeText(getApplicationContext(), "Logout user!", Toast.LENGTH_LONG).show();
-            return true;
+            final AlertDialog.Builder popDialog = new AlertDialog.Builder(this);
+            LinearLayout linear=new LinearLayout(this);
+            linear.setOrientation(LinearLayout.VERTICAL);
+            final TextView text=new TextView(this);
+            text.setText("1km");
+            text.setPadding(10, 10, 10, 10);
+            final SeekBar seek = new SeekBar(this);
+            seek.setMax(9);
+            seek.setProgress(Global.radius / 1000 -1);
+            seek.setKeyProgressIncrement(1);
+            linear.addView(seek);
+            linear.addView(text);
+
+            popDialog.setTitle("Change radius (1km - 10km)");
+            popDialog.setView(linear);
+
+            seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    Global.radius = (progress + 1)*1000;
+                    text.setText(String.valueOf(progress + 1) + "km");
+
+                    if (curFragment instanceof HomeFragment) {
+                        ((HomeFragment)curFragment).reloadData();
+                    }
+                }
+                public void onStartTrackingTouch(SeekBar arg0) {}
+                public void onStopTrackingTouch(SeekBar seekBar) {}
+            });
+
+
+            // Button OK
+            popDialog.setPositiveButton("OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            popDialog.create();
+            popDialog.show();
         }
 
         // user is in notifications fragment
@@ -351,8 +412,7 @@ public class MainView extends AppCompatActivity implements HomeFragment.OnFragme
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public interface onRadiusChangeListener {
+        void reloadData();
     }
 }

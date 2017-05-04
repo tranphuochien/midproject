@@ -7,12 +7,14 @@ package com.tphien.midproject1412171.Modal;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
+import com.tphien.midproject1412171.R;
 
 import java.io.Serializable;
 
 public class Restaurant implements ClusterItem, Serializable {
     //Name,Address,Website,Phone,Email,Rating,Reviews,URL
     private String NO_INFO ="No info";
+
     private String name = NO_INFO;
     private String  address = NO_INFO;
     private String linkWebsite = NO_INFO;
@@ -24,7 +26,7 @@ public class Restaurant implements ClusterItem, Serializable {
     private double lat = 0f;
     private double lon = 0f;
 
-    private int[] idAvatars = new int[0];
+    private int[] idAvatars = {R.drawable.avatar, R.drawable.avatar2, R.drawable.avatar3};
     private int curPosAvatar = 0;
 
     public Restaurant(String name, String address, int[] idAvatars) {
