@@ -3,6 +3,10 @@ package com.tphien.midproject1412171.ar;
 import android.graphics.Color;
 import android.location.Location;
 
+import com.tphien.midproject1412171.Modal.Restaurant;
+
+import java.util.ArrayList;
+
 
 public class RadarView{
 	/** The screen */
@@ -30,7 +34,7 @@ public class RadarView{
 	public float circleOriginX;
 	public float circleOriginY;
 	private float mscale;
-    private CustomLocation locations;
+    private ArrayList<Restaurant> locations;
 	private int nLocation =0;
 
 	public float x = 0;
@@ -41,9 +45,9 @@ public class RadarView{
 	double[] bearings;
 	ARView arView = new ARView();
 
-	public RadarView(DataView dataView, double[] bearings, Location curPos, CustomLocation locations){
+	public RadarView(DataView dataView, double[] bearings, Location curPos, ArrayList<Restaurant> locations){
         this.locations = locations;
-        nLocation = locations.data.length;
+        nLocation = locations.size();
 		this.bearings = bearings;
 		mCurrent = curPos;
 		calculateMetrics();
@@ -78,8 +82,8 @@ public class RadarView{
 
 
 		for(int i = 0; i <nLocation;i++){
-			destinedLocation.setLatitude(locations.data[i].lat);
-			destinedLocation.setLongitude(locations.data[i].lon);
+			destinedLocation.setLatitude(locations.get(i).getLat());
+			destinedLocation.setLongitude(locations.get(i).getLon());
 			convLocToVec(currentLocation, destinedLocation);
 			float x = this.x / mscale;
 			float y = this.z / mscale;
@@ -108,8 +112,8 @@ public class RadarView{
 				angleToShift = (float)bearings[i] - coordinateArray[i][0] ;
 				
 			}
-			destinedLocation.setLatitude(locations.data[i].lat);
-			destinedLocation.setLongitude(locations.data[i].lon);
+			destinedLocation.setLatitude(locations.get(i).getLat());
+			destinedLocation.setLongitude(locations.get(i).getLon());
 			float[] z = new float[1];
 			z[0] = 0;
 			Location.distanceBetween(currentLocation.getLatitude(), currentLocation.getLongitude(), destinedLocation.getLatitude(), destinedLocation.getLongitude(), z);

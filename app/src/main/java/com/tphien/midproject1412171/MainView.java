@@ -34,6 +34,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tphien.midproject1412171.Modal.Restaurant;
+import com.tphien.midproject1412171.ar.ARView;
 import com.tphien.midproject1412171.fragment.HomeFragment;
 import com.tphien.midproject1412171.fragment.MoviesFragment;
 import com.tphien.midproject1412171.fragment.NotificationsFragment;
@@ -243,9 +244,11 @@ public class MainView extends AppCompatActivity {
                         drawer.closeDrawers();
                         return true;
                     case R.id.nav_movies:
-                        navItemIndex = 2;
-                        CURRENT_TAG = TAG_MOVIES;
-                        break;
+                        //navItemIndex = 2;
+                        //CURRENT_TAG = TAG_MOVIES;
+                        startActivity(new Intent(MainView.this, ARView.class));
+                        drawer.closeDrawers();
+                        return true;
                     case R.id.nav_notifications:
                         navItemIndex = 3;
                         CURRENT_TAG = TAG_NOTIFICATIONS;

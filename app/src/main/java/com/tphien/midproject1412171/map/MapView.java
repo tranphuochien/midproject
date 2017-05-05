@@ -36,6 +36,7 @@ import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.ui.IconGenerator;
+import com.tphien.midproject1412171.Global;
 import com.tphien.midproject1412171.MainView;
 import com.tphien.midproject1412171.Modal.Restaurant;
 import com.tphien.midproject1412171.R;
@@ -282,7 +283,6 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
     }
 
 
-
     @Override
     public boolean onClusterClick(Cluster<Restaurant> cluster) {
         // Show a toast with some info when the cluster is clicked.
@@ -326,58 +326,7 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
     }
 
     private void addItems() throws JSONException, UnsupportedEncodingException {
-        LoadDataTask loadDataTask  = new LoadDataTask(MapView.this);
-        loadDataTask.execute();
+        mClusterManager.addItems(Global.getDataBank());
     }
 
-    private class LoadDataTask extends AsyncTask<Void, Void, ArrayList<Restaurant>>{
-        private ProgressDialog pd;
-        private Context context;
-
-        LoadDataTask(Context context){
-            this.context = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pd = new ProgressDialog(context);
-            pd.setMessage("Loading data...");
-            pd.setIndeterminate(false);
-            pd.setCancelable(false);
-            pd.show();
-        }
-
-        @Override
-        protected ArrayList<Restaurant> doInBackground(Void... voids) {
-            InputStream inputStream = getResources().openRawResource(R.raw.data_restaurants);
-            ArrayList<Restaurant> items = new ArrayList<>();
-            try {
-                items = new MyReaderJson().read(inputStream);
-            } catch (JSONException e) {
-                e.printStackTrace();
-
-                //Canot read data from json file -> create dummy data
-                items.add(new Restaurant());
-                return items;
-            }
-
-            return items;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Restaurant> restaurants) {
-            super.onPostExecute(restaurants);
-            mClusterManager.addItems(restaurants);
-            if (pd != null)
-            {
-                pd.dismiss();
-            }
-        }
-    }
 }

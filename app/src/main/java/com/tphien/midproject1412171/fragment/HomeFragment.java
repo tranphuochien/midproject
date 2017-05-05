@@ -26,11 +26,20 @@ import com.tphien.midproject1412171.MainView.onRadiusChangeListener;
 import com.tphien.midproject1412171.Modal.Restaurant;
 import com.tphien.midproject1412171.R;
 import com.tphien.midproject1412171.RestaurantAdapter;
+import com.tphien.midproject1412171.ar.ARView;
 import com.tphien.midproject1412171.tool.MyReaderJson;
+import com.tphien.midproject1412171.tool.ServiceControler;
 
 import org.json.JSONException;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 
@@ -45,6 +54,7 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
     private static Context context;
     private TextView tvCurPos;
     private TextView tvResult;
+    static final String LINK_REQUEST = "http://group9cntn.me/data_restaurants.json";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -92,7 +102,7 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
 
     private void loadData() {
         LoadDataTask loadDataTask = new LoadDataTask(context);
-        loadDataTask.execute();
+        loadDataTask.execute(LINK_REQUEST);
     }
 
     private boolean updateBufferData() {
@@ -247,7 +257,7 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
         return result;
     }
 
-    private class LoadDataTask extends AsyncTask<Void, Void, ArrayList<Restaurant>> {
+    private class LoadDataTask extends AsyncTask<String, Void, ArrayList<Restaurant>> {
         private Context context;
 
         LoadDataTask(Context context){
@@ -260,19 +270,58 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
         }
 
         @Override
-        protected ArrayList<Restaurant> doInBackground(Void... voids) {
-            InputStream inputStream = getResources().openRawResource(R.raw.data_restaurants);
+        protected ArrayList<Restaurant> doInBackground(String... params) {
             ArrayList<Restaurant> items = new ArrayList<>();
-            try {
-                items = new MyReaderJson().read(inputStream);
-            } catch (JSONException e) {
-                e.printStackTrace();
+            if (!ServiceControler.isNetworkAvailable(context)) {
+                InputStream inputStream = getResources().openRawResource(R.raw.data_restaurants);
 
-                //Canot read data from json file -> create dummy data
-                items.add(new Restaurant());
-                return items;
+                try {
+                    items = new MyReaderJson().read(inputStream);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                    //Canot read data from json file -> create dummy data
+                    items.add(new Restaurant());
+                    return items;
+                }
+            } else {
+                HttpURLConnection connection = null;
+                BufferedReader reader = null;
+
+                try {
+                    final URL url = new URL(params[0]);
+                    connection = (HttpURLConnection) url.openConnection();
+                    connection.connect();
+
+                    InputStream stream = connection.getInputStream();
+
+                    reader = new BufferedReader(new InputStreamReader(stream));
+                    StringBuilder buffer = new StringBuilder();
+                    String line = "";
+
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line);
+                    }
+
+                    InputStream inputStream = new ByteArrayInputStream((buffer.toString()).getBytes(StandardCharsets.UTF_8));
+                    items = new MyReaderJson().read(inputStream);
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                    items.add(new Restaurant());
+                } finally {
+                    if (connection != null) {
+                        connection.disconnect();
+                    }
+
+                    if (reader != null) {
+                        try {
+                            reader.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
-
             return items;
         }
 

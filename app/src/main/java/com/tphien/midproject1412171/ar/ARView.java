@@ -17,6 +17,8 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -41,8 +43,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tphien.midproject1412171.Global;
+import com.tphien.midproject1412171.Modal.Restaurant;
+import com.tphien.midproject1412171.tool.ServiceControler;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -50,6 +56,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ARView extends Activity implements SensorEventListener {
@@ -65,7 +72,7 @@ public class ARView extends Activity implements SensorEventListener {
     public static float pitch;
     public static float roll;
     public static Location mCurrent;
-    public static CustomLocation locations;
+    public static ArrayList<Restaurant> locations = new ArrayList<>();
 
     static PaintUtils paintScreen;
     static DataView dataView;
@@ -335,7 +342,6 @@ public class ARView extends Activity implements SensorEventListener {
 
         @Override
         public void onProviderEnabled(String provider) {
-
         }
 
         @Override
@@ -344,113 +350,62 @@ public class ARView extends Activity implements SensorEventListener {
         }
     };
 
-    private class JsonTask extends AsyncTask<String, String, String> {
 
+
+    private class JsonTask extends AsyncTask<String, String, String> {
         protected void onPreExecute() {
             super.onPreExecute();
 
             pd = new ProgressDialog(ARView.this);
-            pd.setMessage("Please wait...");
+            pd.setMessage("Loading data...");
             pd.setCancelable(false);
             pd.show();
         }
 
         protected String doInBackground(String... params) {
-            HttpURLConnection connection = null;
-            BufferedReader reader = null;
+            int radius = 1000;
+            boolean mode = false;
+            int nLocations = Global.getDataBank().size();
 
-            try {
-                final URL url = new URL(params[0]);
-                connection = (HttpURLConnection) url.openConnection();
+            final LocationManager manager = (LocationManager)ARView.this.getSystemService( Context.LOCATION_SERVICE );
 
-                connection.connect();
-
-                InputStream stream = connection.getInputStream();
-
-                reader = new BufferedReader(new InputStreamReader(stream));
-
-                StringBuffer buffer = new StringBuffer();
-                String line = "";
-
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line);
-                }
-                return buffer.toString();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (connection != null) {
-                    connection.disconnect();
-                }
-                try {
-                    if (reader != null) {
-                        reader.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+                mode = true;
             }
+
+            LatLng pos = Global.getCurPosition(mode);
+
+            Location curPos = new Location("current position");
+            Restaurant tmp;
+            curPos.setLatitude(pos.latitude);
+            curPos.setLongitude(pos.longitude);
+            Location targetPos = new Location("current position");
+            for (int i = 0; i < nLocations; i++) {
+                tmp = Global.getDataByIndex(i);
+                targetPos.setLatitude(tmp.getLat());
+                targetPos.setLongitude(tmp.getLon());
+                float k = 0;
+                k = curPos.distanceTo(targetPos);
+                if (k <= radius)
+                    locations.add(tmp);
+            }
+            if (locations.size() == 0)
+                locations.add(new Restaurant());
             return null;
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            if (pd.isShowing()){
-                pd.dismiss();
-            }
-
-            if (result == null) {
-
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ARView.this);
-                // khởi tạo dialog
-                alertDialogBuilder.setMessage("No Internet. Use local data");
-                // thiết lập nội dung cho dialog
-                alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        Data[] dummy = new Data[6];
-
-                        dummy[0] = new Data("Chùa Minh Kiến Đài", 10.8420836d, 106.66506d, "accountancy");
-                        dummy[1] = new Data("Ngã tư Quang Trung", 10.8341279d, 106.665937d, "mydefault");
-                        dummy[2] = new Data("Trường THCS Nguyễn Du", 10.8444073d, 106.662778d, "schools");
-                        dummy[3] = new Data("HCMUS",10.7620684d ,106.68283d , "schools");
-                        dummy[4] = new Data("Nowzone", 10.7637943d,106.683551d  , "movies");
-                        dummy[5] = new Data("<3",10.8665766d ,106.608887d , "astrology");
-
-                        locations = new CustomLocation(dummy);
-
-                        //Load radar and locations
-                        loadUpperLayout();
-                        //Register GPS
-                        registerGPS();
-                        return;
-                    }
-                });
-
-                alertDialogBuilder.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                // tạo dialog
-                alertDialog.show();
-                // hiển thị dialog
-                return;
-            }
-
-            //Parse data from json
-            Gson gson = new GsonBuilder().create();
-            locations = gson.fromJson(result,CustomLocation.class);
 
             //Load radar and locations
             loadUpperLayout();
             //Register GPS
             registerGPS();
+
+            if (pd.isShowing()){
+                pd.dismiss();
+            }
         }
     }
 

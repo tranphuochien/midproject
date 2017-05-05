@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.location.Location;
+import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,7 +18,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tphien.midproject1412171.Modal.Restaurant;
 import com.tphien.midproject1412171.R;
+import com.tphien.midproject1412171.RestaurantProfile;
+import com.tphien.midproject1412171.map.MapView;
 
 import java.util.ArrayList;
 
@@ -38,7 +42,7 @@ public class DataView {
 	RelativeLayout.LayoutParams[] subjectImageViewParams;
 	RelativeLayout.LayoutParams[] subjectTextViewParams;
 	TextView[] locationTextView;
-    CustomLocation locations;
+	ArrayList<Restaurant> locations;
     int nLocation =0;
 	int[] nextXofText ;
 	ArrayList<Integer> 	nextYofText = new ArrayList<Integer>();
@@ -105,8 +109,8 @@ public class DataView {
             bearing  = 360 + bearing;
 
         for(int i = 0; i <nLocation;i++){
-            destinedLocation.setLatitude(locations.data[i].lat);
-            destinedLocation.setLongitude(locations.data[i].lon);
+            destinedLocation.setLatitude(locations.get(i).getLat());
+            destinedLocation.setLongitude(locations.get(i).getLon());
             bearing = currentLocation.bearingTo(destinedLocation);
 
             if(bearing < 0){
@@ -120,7 +124,7 @@ public class DataView {
 
 	public void init( int widthInit, int heightInit, android.hardware.Camera camera,
 					 DisplayMetrics displayMetrics, RelativeLayout rel, Location curPos,
-					 CustomLocation locations) {
+					  ArrayList<Restaurant> locations) {
 		if (curPos == null) {
             mCurrent = new Location("provider");
             mCurrent.setLatitude(10.8428107);
@@ -129,7 +133,7 @@ public class DataView {
             mCurrent = curPos;
         }
         this.locations = locations;
-        nLocation = locations.data.length;
+        nLocation = locations.size();
 
 		try {
 			locationMarkerView = new RelativeLayout[nLocation];
@@ -152,7 +156,7 @@ public class DataView {
                 subjectImageView[i].setId(i);
 
                 locationTextView[i] = new TextView(_context);
-                locationTextView[i].setText(checkTextToDisplay(locations.data[i].name));
+                locationTextView[i].setText(checkTextToDisplay(locations.get(i).getName()));
                 locationTextView[i].setTextColor(Color.BLACK);
                 locationTextView[i].setBackgroundResource(R.drawable.rounded_rectangle);
                 locationTextView[i].setId(i);
@@ -226,8 +230,8 @@ public class DataView {
 				bearing  = 360 + bearing;
 
 			for(int i = 0; i <nLocation;i++){
-				destinedLocation.setLatitude(locations.data[i].lat);
-				destinedLocation.setLongitude(locations.data[i].lon);
+				destinedLocation.setLatitude(locations.get(i).getLat());
+				destinedLocation.setLongitude(locations.get(i).getLon());
 				bearing = currentLocation.bearingTo(destinedLocation);
 
 				if(bearing < 0){
@@ -290,20 +294,18 @@ public class DataView {
                                     Intent intent = new Intent(_context, FindPath.class);
                                     intent.putExtra("beginLat",mCurrent.getLatitude());
                                     intent.putExtra("beginLon",mCurrent.getLongitude());
-                                    intent.putExtra("endLat",locations.data[id].lat);
-                                    intent.putExtra("endLon", locations.data[id].lon);
-                                    intent.putExtra("distination",locations.data[id].name);
+                                    intent.putExtra("endLat",locations.get(id).getLat());
+                                    intent.putExtra("endLon", locations.get(id).getLon());
+                                    intent.putExtra("distination",locations.get(id).getName());
 
                                     _context.startActivity(intent);
                                 }
                                 else {
-                                    Intent intent = new Intent(_context, DetailLocation.class);
-                                    intent.putExtra("lat",locations.data[id].lat);
-                                    intent.putExtra("lon", locations.data[id].lon);
-                                    intent.putExtra("name",locations.data[id].name);
-                                    intent.putExtra("img",locations.data[id].img);
-
-                                    _context.startActivity(intent);
+									Intent intent = new Intent(_context, RestaurantProfile.class );
+									Bundle bundle = new Bundle();
+									bundle.putSerializable("restaurant_info",locations.get(id));
+									intent.putExtras(bundle);
+									_context.startActivity(intent);
                                 }
                             }
                         });
@@ -419,7 +421,7 @@ public class DataView {
 				nextXofText[i] = (int)(angleToShift*degreetopixelWidth);
 				yawPrevious = this.yaw;
 				isDrawing = true;
-				radarText(dw, locations.data[i].name, nextXofText[i], yPosition, true, true, i);
+				radarText(dw, locations.get(i).getName(), nextXofText[i], yPosition, true, true, i);
 				coordinateArray[i][0] =  nextXofText[i];
 				coordinateArray[i][1] =   (int)yPosition;
 
@@ -435,13 +437,13 @@ public class DataView {
 
 				nextXofText[i] = (int)((displayMetrics.widthPixels/2)+(angleToShift*degreetopixelWidth));
 				if(Math.abs(coordinateArray[i][0] - nextXofText[i]) > 50){
-					radarText(dw, locations.data[i].name, (nextXofText[i]), yPosition, true, true, i);
+					radarText(dw, locations.get(i).getName(), (nextXofText[i]), yPosition, true, true, i);
 					coordinateArray[i][0] =  (int)((displayMetrics.widthPixels/2)+(angleToShift*degreetopixelWidth));
 					coordinateArray[i][1] =  (int)yPosition;
 
 					isDrawing = true;
 				}else{
-					radarText(dw, locations.data[i].name,coordinateArray[i][0],yPosition, true, true, i);
+					radarText(dw, locations.get(i).getName(),coordinateArray[i][0],yPosition, true, true, i);
 					isDrawing = false;
 				}
 			}

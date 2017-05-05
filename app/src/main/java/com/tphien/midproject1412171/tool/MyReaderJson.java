@@ -24,6 +24,7 @@ public class MyReaderJson {
      */
     private static final String REGEX_INPUT_BOUNDARY_BEGINNING = "\\A";
 
+
     public ArrayList<Restaurant> read(InputStream inputStream) throws JSONException {
         ArrayList<Restaurant> items = new ArrayList<Restaurant>();
         String json = new Scanner(inputStream).useDelimiter(REGEX_INPUT_BOUNDARY_BEGINNING).next();
@@ -85,4 +86,66 @@ public class MyReaderJson {
         }
         return items;
     }
+
+    /*public ArrayList<Restaurant> read(String data) throws JSONException {
+        ArrayList<Restaurant> items = new ArrayList<Restaurant>();
+
+        JSONArray array = new JSONArray(data);
+
+        int []idAvatars = {R.drawable.avatar, R.drawable.avatar2, R.drawable.avatar3};
+
+        int n = array.length();
+        String name = "";
+        String  address = "";
+        String linkWebsite = "";
+        String phoneNumber = "";
+        String email = "";
+        int rating = 0;
+        String review = "";
+        String url = "";
+        double lat = 0f;
+        double lon = 0f;
+
+        for (int i = 0; i < n; i++) {
+            JSONObject object = array.getJSONObject(i);
+
+            if (!object.isNull("name")) {
+                name = object.getString("name");
+            }
+            if (!object.isNull("address")) {
+                address = object.getString("address");
+            }
+            if (!object.isNull("website")) {
+                linkWebsite = object.getString("website");
+            }
+            if (!object.isNull("phone")) {
+                phoneNumber = object.getString("phone");
+            }
+            if (!object.isNull("email")) {
+                email = object.getString("email");
+            }
+            if (!object.isNull("rating")) {
+                rating = object.getInt("rating");
+            }
+            if (!object.isNull("rating")) {
+                rating = object.getInt("rating");
+            }
+            if (!object.isNull("reviews")) {
+                review = object.getString("reviews");
+            }
+            if (!object.isNull("URL")) {
+                url = object.getString("URL");
+            }
+            if (!object.isNull("lat")) {
+                lat = object.getDouble("lat");
+            }
+            if (!object.isNull("lon")) {
+                lon = object.getDouble("lon");
+            }
+
+            items.add(new Restaurant(name,address, linkWebsite, phoneNumber, email, rating, review,
+                    url, lat, lon, idAvatars));
+        }
+        return items;
+    }*/
 }
