@@ -156,7 +156,6 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
                 if (isLoadedData) {
                     if (listView.getLastVisiblePosition() == listView.getAdapter().getCount() - 1
                             && listView.getChildAt(listView.getChildCount() - 1).getBottom() <= listView.getHeight()) {
-                        Toast.makeText(context, "end", Toast.LENGTH_SHORT).show();
                         if (updateBufferData())
                             restaurantAdapter.notifyDataSetChanged();
                     }

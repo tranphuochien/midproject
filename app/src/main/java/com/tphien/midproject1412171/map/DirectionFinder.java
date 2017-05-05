@@ -27,13 +27,25 @@ public class DirectionFinder {
     private static final String DIRECTION_URL_API = "https://maps.googleapis.com/maps/api/directions/json?";
     private static final String GOOGLE_API_KEY = "AIzaSyAteWWYLsglbh3Qm6U_mNd96TrJnsX8BE8";
     private DirectionFinderListener listener;
-    private String origin;
-    private String destination;
+    private String origin = "";
+    private String destination = "";
+    private boolean typeFind; //0: file string, 1: find lat,lon
+    private double bLat = 0f, bLon = 0f, eLat = 0f, eLon = 0f;
 
-    public DirectionFinder(DirectionFinderListener listener, String origin, String destination) {
+    public DirectionFinder(DirectionFinderListener listener, String origin, String destination, boolean type) {
         this.listener = listener;
         this.origin = origin;
         this.destination = destination;
+        this.typeFind = type;
+    }
+
+    public DirectionFinder(DirectionFinderListener listener, double bLat, double bLon, double eLat, double eLon, boolean type) {
+        this.listener = listener;
+        this.bLat = bLat;
+        this.bLon = bLon;
+        this.eLat = eLat;
+        this.eLon = eLon;
+        this.typeFind = type;
     }
 
     public void execute() throws UnsupportedEncodingException {
@@ -44,8 +56,16 @@ public class DirectionFinder {
     private String createUrl() throws UnsupportedEncodingException {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
         String urlDestination = URLEncoder.encode(destination, "utf-8");
+        String sBLat = URLEncoder.encode(String.valueOf(bLat), "utf-8");
+        String sBLon = URLEncoder.encode(String.valueOf(bLon), "utf-8");
+        String sELat = URLEncoder.encode(String.valueOf(eLat), "utf-8");
+        String sELon = URLEncoder.encode(String.valueOf(eLon), "utf-8");
 
-        return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&key=" + GOOGLE_API_KEY;
+        //Find string
+        if (!typeFind)
+            return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&key=" + GOOGLE_API_KEY;
+        else
+            return DIRECTION_URL_API + "origin=" + sBLat +"," + sBLon + "&destination=" + sELat +"," + sELon + "&key=" + GOOGLE_API_KEY;
     }
 
     private class DownloadRawData extends AsyncTask<String, Void, String> {

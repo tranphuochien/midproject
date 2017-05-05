@@ -39,12 +39,14 @@ import com.google.maps.android.ui.IconGenerator;
 import com.tphien.midproject1412171.MainView;
 import com.tphien.midproject1412171.Modal.Restaurant;
 import com.tphien.midproject1412171.R;
+import com.tphien.midproject1412171.RestaurantProfile;
 import com.tphien.midproject1412171.tool.MultiDrawable;
 import com.tphien.midproject1412171.tool.MyReaderJson;
 
 import org.json.JSONException;
 
 import java.io.InputStream;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -234,15 +236,12 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
         lsClick = new OnInterInfoWindowTouchListener(detailBtn) {
             @Override
             protected void onClickConfirmed(View v, Marker marker) {
-                Restaurant person = markerRestaurantMap.get(marker.getId());
-                Toast.makeText(MapView.this, "being contruction",Toast.LENGTH_SHORT ).show();
-                /*Intent intent = new Intent(CustomMarker.this, Re.class );
-
-                intent.putExtra("phoneNumber","+841267861996");
-                intent.putExtra("name", person.getName());
-                intent.putExtra("email", person.getEmail());
-                intent.putExtra("idAvatar", person.getProfilePhoto() );
-                startActivity(intent);*/
+                Restaurant restaurant = markerRestaurantMap.get(marker.getId());
+                Intent intent = new Intent(MapView.this, RestaurantProfile.class );
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("restaurant_info",restaurant);
+                intent.putExtras(bundle);
+                MapView.this.startActivity(intent);
             }
         };
         detailBtn.setOnTouchListener(lsClick);
