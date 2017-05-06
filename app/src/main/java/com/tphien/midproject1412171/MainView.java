@@ -1,16 +1,10 @@
 package com.tphien.midproject1412171;
 
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -20,7 +14,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,21 +26,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.tphien.midproject1412171.Modal.Restaurant;
 import com.tphien.midproject1412171.ar.ARView;
 import com.tphien.midproject1412171.fragment.HomeFragment;
 import com.tphien.midproject1412171.fragment.MoviesFragment;
-import com.tphien.midproject1412171.fragment.NotificationsFragment;
-import com.tphien.midproject1412171.fragment.PhotosFragment;
+import com.tphien.midproject1412171.fragment.FavoritesFragment;
 import com.tphien.midproject1412171.fragment.SettingsFragment;
 import com.tphien.midproject1412171.map.MapView;
 import com.tphien.midproject1412171.tool.CircleTransform;
-import com.tphien.midproject1412171.tool.MyReaderJson;
-
-import org.json.JSONException;
-
-import java.io.InputStream;
-import java.util.ArrayList;
 
 public class MainView extends AppCompatActivity {
     private NavigationView navigationView;
@@ -70,7 +55,7 @@ public class MainView extends AppCompatActivity {
     private static final String TAG_HOME = "home";
     private static final String TAG_PHOTOS = "photos";
     private static final String TAG_MOVIES = "movies";
-    private static final String TAG_NOTIFICATIONS = "notifications";
+    private static final String TAG_FAVORITES = "favorites";
     private static final String TAG_SETTINGS = "settings";
     public static String CURRENT_TAG = TAG_HOME;
 
@@ -206,10 +191,10 @@ public class MainView extends AppCompatActivity {
                 return new MoviesFragment();
             case 3:
                 // notifications fragment
-                return new NotificationsFragment();
+                return new FavoritesFragment(MainView.this);
             case 4:
                 // settings fragment
-                return new SettingsFragment();
+                return new SettingsFragment(MainView.this);
             default:
                 return new HomeFragment(MainView.this);
         }
@@ -243,15 +228,15 @@ public class MainView extends AppCompatActivity {
                         startActivity(new Intent(MainView.this, MapView.class));
                         drawer.closeDrawers();
                         return true;
-                    case R.id.nav_movies:
+                    case R.id.nav_ar:
                         //navItemIndex = 2;
                         //CURRENT_TAG = TAG_MOVIES;
                         startActivity(new Intent(MainView.this, ARView.class));
                         drawer.closeDrawers();
                         return true;
-                    case R.id.nav_notifications:
+                    case R.id.nav_favorites:
                         navItemIndex = 3;
-                        CURRENT_TAG = TAG_NOTIFICATIONS;
+                        CURRENT_TAG = TAG_FAVORITES;
                         break;
                     case R.id.nav_settings:
                         navItemIndex = 4;

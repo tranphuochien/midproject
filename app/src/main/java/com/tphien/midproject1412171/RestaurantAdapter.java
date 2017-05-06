@@ -13,6 +13,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -45,7 +47,7 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
     private static class ViewHolder {
         TextView tvName;
         TextView tvAddress;
-        CircleImageView imgViewCircle;
+        ImageView imgViewCircle;
         ImageButton btnDetail;
     }
     public void selectedItem(int position)
@@ -70,7 +72,7 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 
             vh.tvName = (TextView) convertView.findViewById(R.id.tvName);
             vh.tvAddress = (TextView) convertView.findViewById(R.id.tvPhoneNumber);
-            vh.imgViewCircle = (CircleImageView) convertView.findViewById(R.id.imageViewAvatar);
+            vh.imgViewCircle = (ImageView) convertView.findViewById(R.id.imageViewAvatar);
             vh.btnDetail = (ImageButton) convertView.findViewById(R.id.detailBut);
 
             Glide.with(context.getApplicationContext()).load("android.resource://com.tphien.midproject1412171/drawable/arrow_right")
@@ -107,6 +109,8 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
             public void onClick(View view) {
                 int[] idAvatars = getItem(position).getIdAvatars();
                 int curPos = getItem(position).getCurPosAvatar();
+
+                Log.d("clickcircle", "pre: " + String.valueOf(curPos));
                 int idAvatar;
                 int n = idAvatars.length;
 
@@ -118,7 +122,15 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
                     getItem(position).setCurPosAvatar(curPos);
                     idAvatar = idAvatars[curPos];
                 }
-                ((CircleImageView)view).setImageResource(idAvatar);
+                Log.d("clickcircle", "last: " + String.valueOf(curPos));
+
+                //((ImageView)view).setImageResource(idAvatar);
+                Glide.with(context.getApplicationContext()).load(getItem(position).getStringResourceCurAvatar())
+                        .crossFade()
+                        .thumbnail(0.5f)
+                        .bitmapTransform(new CircleTransform(context.getApplicationContext()))
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into((ImageView) view);
             }
         });
 
@@ -137,8 +149,13 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
         vh.tvName.setTextColor(Color.parseColor("#446cb3"));
         vh.tvAddress.setText(restaurant.getAddress());
         vh.tvName.setTextColor(Color.parseColor("#6C7A89"));
-        vh.imgViewCircle.setImageResource(getItem(position).getIdAvatars()[getItem(position).getCurPosAvatar()]);
 
+        Glide.with(context.getApplicationContext()).load(getItem(position).getStringResourceCurAvatar())
+                .crossFade()
+                .thumbnail(0.5f)
+                .bitmapTransform(new CircleTransform(context.getApplicationContext()))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into((ImageView) vh.imgViewCircle);
 
         return convertView;
     }

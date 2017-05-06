@@ -8,9 +8,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tphien.midproject1412171.Modal.Restaurant;
+import com.tphien.midproject1412171.tool.CircleTransform;
 
 import java.util.Objects;
 
@@ -35,6 +39,15 @@ public class RestaurantProfile extends AppCompatActivity {
             ((TextView)findViewById(R.id.tvAddress)).setText(restaurant.getAddress());
             ((TextView)findViewById(R.id.tvWebsite)).setText(checkUrl(restaurant.getLinkWebsite()));
             ((TextView)findViewById(R.id.tvReview)).setText(String.format("Review: %s", restaurant.getReview()));
+            ImageView header = (ImageView) findViewById(R.id.header_cover_image);
+
+
+            Glide.with(RestaurantProfile.this.getApplicationContext())
+                    .load(restaurant.getStringResourceCurAvatar())
+                    .crossFade()
+                    .thumbnail(0.5f)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(header);
         }
     }
 
@@ -72,6 +85,33 @@ public class RestaurantProfile extends AppCompatActivity {
         RestaurantProfile.this.startActivity(Intent.createChooser(intent, "Send email to " + restaurant.getName()));
     }
 
+    public void onClickFavorite(View view) {
+        ImageView imageView = (ImageView)findViewById(R.id.add_friend);
+
+        String tag = String.valueOf(imageView.getTag());
+        if (tag.equals("false")) {
+            imageView.setTag("true");
+            Glide.with(RestaurantProfile.this.getApplicationContext())
+                    .load("android.resource://com.tphien.midproject1412171/drawable/heart_true")
+                    .crossFade()
+                    .thumbnail(0.5f)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into((ImageView) view);
+            Global.addNewFavorite(restaurant);
+
+        } else {
+            imageView.setTag("false");
+            Glide.with(RestaurantProfile.this.getApplicationContext())
+                    .load("android.resource://com.tphien.midproject1412171/drawable/heart_false")
+                    .crossFade()
+                    .thumbnail(0.5f)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into((ImageView) view);
+
+        }
+
+    }
+
     public void onClickMap(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         String url = checkUrl(restaurant.getUrl());
@@ -94,4 +134,6 @@ public class RestaurantProfile extends AppCompatActivity {
         }
         return url;
     }
+
+
 }

@@ -64,10 +64,8 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
 
     private GoogleMap mMap;
     private ClusterManager<Restaurant> mClusterManager;
-    private Random mRandom = new Random(1984);
     private View convertView;
     private OnInterInfoWindowTouchListener lsClick;
-    private static final String URL_REQUEST = "http://www.vneasyrider.com/dummydb.json";
     MapWrapperLayout mapWrapperLayout;
     private HashMap<String, Restaurant> markerRestaurantMap= new HashMap<>();
     private static final CharSequence[] MAP_TYPE_ITEMS =
@@ -230,6 +228,13 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
         mMap.setOnCameraIdleListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
         mMap.setOnInfoWindowClickListener(mClusterManager);
+
+        MarkerOptions marker = new MarkerOptions().position(new LatLng(10.8483638,106.664746));
+
+        marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.accountancy));
+
+        mMap.addMarker(marker);
+
 
         convertView = LayoutInflater.from(MapView.this).inflate(R.layout.content_location, null);
         Button detailBtn = (Button)convertView.findViewById(R.id.detailBtn);

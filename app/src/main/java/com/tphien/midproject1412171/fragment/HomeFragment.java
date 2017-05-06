@@ -1,6 +1,5 @@
 package com.tphien.midproject1412171.fragment;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,7 +25,6 @@ import com.tphien.midproject1412171.MainView.onRadiusChangeListener;
 import com.tphien.midproject1412171.Modal.Restaurant;
 import com.tphien.midproject1412171.R;
 import com.tphien.midproject1412171.RestaurantAdapter;
-import com.tphien.midproject1412171.ar.ARView;
 import com.tphien.midproject1412171.tool.MyReaderJson;
 import com.tphien.midproject1412171.tool.ServiceControler;
 
@@ -56,14 +54,6 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
     private TextView tvResult;
     static final String LINK_REQUEST = "http://group9cntn.me/data_restaurants.json";
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -73,31 +63,10 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
         HomeFragment.context = context;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     private void loadData() {
@@ -106,16 +75,14 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
     }
 
     private boolean updateBufferData() {
-        //Nothing to load
-        if (postLast == (MAX -1))
+        if (postLast > MAX)
             return false;
-
         //not enough entries to load
         if ( (MAX - postLast) < BUFFER ) {
             for (int i = postLast; i < MAX; i++) {
                 bufferData.add(nearbyDataBank.get(i));
             }
-            postLast = MAX - 1;
+            postLast += BUFFER;
             return true;
         }
         int n = nearbyDataBank.size();
@@ -184,7 +151,6 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
     }
 
     @Override

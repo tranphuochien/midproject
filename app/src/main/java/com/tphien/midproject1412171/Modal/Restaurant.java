@@ -134,6 +134,18 @@ public class Restaurant implements ClusterItem, Serializable {
     }
 
     public int getCurAvatar() {return idAvatars[curPosAvatar];}
+
+    public String getStringResourceCurAvatar() {
+        switch (curPosAvatar) {
+            case 0:
+                return "android.resource://com.tphien.midproject1412171/drawable/avatar";
+            case 1:
+                return "android.resource://com.tphien.midproject1412171/drawable/avatar2";
+            case 2:
+                return "android.resource://com.tphien.midproject1412171/drawable/avatar3";
+        }
+        return null;
+    }
     @Override
     public LatLng getPosition() {
         return new LatLng(lat, lon);

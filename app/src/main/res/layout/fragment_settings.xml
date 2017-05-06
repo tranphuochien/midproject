@@ -4,11 +4,24 @@
     android:layout_height="match_parent"
     tools:context="com.tphien.midproject1412171.fragment.SettingsFragment">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:alpha="0.3"
-        android:src="@drawable/ic_settings_black_24dp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:text="Fake GPS"
+            android:layout_marginLeft="10dp"/>
+
+        <ToggleButton
+            android:id="@+id/toggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ToggleButton" />
+    </LinearLayout>
 
 </FrameLayout>

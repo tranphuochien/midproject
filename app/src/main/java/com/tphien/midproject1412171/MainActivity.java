@@ -18,8 +18,4 @@ public class MainActivity extends AppCompatActivity {
     public void onClickGetStarted(View view) {
         startActivity(new Intent(MainActivity.this, MainView.class));
     }
-
-    public void onClickAR(View view) {
-        startActivity(new Intent(MainActivity.this, ARView.class));
-    }
 }
