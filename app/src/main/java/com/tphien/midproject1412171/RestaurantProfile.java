@@ -16,6 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tphien.midproject1412171.Modal.Restaurant;
 import com.tphien.midproject1412171.tool.CircleTransform;
 
+import java.io.File;
 import java.util.Objects;
 
 public class RestaurantProfile extends AppCompatActivity {
@@ -136,4 +137,14 @@ public class RestaurantProfile extends AppCompatActivity {
     }
 
 
+    public void onClickShareBut(View view) {
+
+        File file = new File("jj");
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT,restaurant.getLinkWebsite());
+        startActivity(intent);
+    }
 }
