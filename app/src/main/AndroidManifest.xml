@@ -32,7 +32,8 @@
             android:name=".AboutUsActivity"
             android:configChanges="orientation|screenSize" />
         <activity android:name=".PrivacyPolicyActivity" />
-        <activity android:name=".MainView" />
+        <activity android:name=".MainView"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

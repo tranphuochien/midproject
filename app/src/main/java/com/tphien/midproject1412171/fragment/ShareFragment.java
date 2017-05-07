@@ -50,6 +50,9 @@ public class ShareFragment extends Fragment {
     // The button to select an image
     private Button mButtonSelectImage;
 
+    // The button to share an image
+    private Button mButtonShareImage;
+
     // The URI of the image selected to detect.
     private Uri mImageUri;
 
@@ -90,6 +93,7 @@ public class ShareFragment extends Fragment {
 
 
         mButtonSelectImage = (Button)view.findViewById(R.id.buttonSelectImage);
+        mButtonShareImage = (Button)view.findViewById(R.id.buttonShareImage);
         mEditText = (EditText)view.findViewById(R.id.editTextResult);
         tvAnger = (TextView)view.findViewById(R.id.tv_anger);
         tvHappiness = (TextView)view.findViewById(R.id.tv_happiness);
@@ -111,6 +115,23 @@ public class ShareFragment extends Fragment {
             }
         });
 
+        mButtonShareImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String fileName = saveBitmap(mBitmap);
+                assert fileName != null;
+                File file = new File(fileName);
+
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.setType("image/jpeg");
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                startActivity(intent);
+            }
+        });
+
+
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -121,6 +142,7 @@ public class ShareFragment extends Fragment {
 
         // Do emotion detection using auto-detected faces.
         try {
+            mEditText.append("\nAnalyst...\n");
             new doRequest().execute();
         } catch (Exception e) {
             mEditText.append("Error encountered. Exception is: " + e.toString());
@@ -182,17 +204,6 @@ public class ShareFragment extends Fragment {
             }
         }
         return null;
-    }
-
-    public void shareImage(View view) {
-        String fileName = saveBitmap(mBitmap);
-        File file = new File(fileName);
-
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.setType("image/jpeg");
-        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-        startActivity(intent);
     }
 
     private List<RecognizeResult> processWithAutoFaceDetection() throws EmotionServiceException, IOException {

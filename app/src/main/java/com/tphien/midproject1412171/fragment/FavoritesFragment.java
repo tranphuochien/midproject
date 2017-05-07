@@ -30,6 +30,7 @@ public class FavoritesFragment extends Fragment {
     private static final int BUFFER = 10;
     private boolean isLoadedData = false;
 
+    public FavoritesFragment() {}
     public FavoritesFragment(Context context) {
         FavoritesFragment.context = context;
     }
@@ -37,6 +38,8 @@ public class FavoritesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null)
+            FavoritesFragment.context = Global.tmpContext;
     }
 
     private boolean updateBufferData() {
@@ -128,6 +131,7 @@ public class FavoritesFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         Glide.get(context).clearMemory();
+        Global.tmpContext = context;
     }
 
 

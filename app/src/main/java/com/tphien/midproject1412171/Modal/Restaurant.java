@@ -10,6 +10,7 @@ import com.google.maps.android.clustering.ClusterItem;
 import com.tphien.midproject1412171.R;
 
 import java.io.Serializable;
+import java.util.Random;
 
 public class Restaurant implements ClusterItem, Serializable {
     //Name,Address,Website,Phone,Email,Rating,Reviews,URL
@@ -26,8 +27,12 @@ public class Restaurant implements ClusterItem, Serializable {
     private double lat = 0f;
     private double lon = 0f;
 
-    private int[] idAvatars = {R.drawable.avatar, R.drawable.avatar2, R.drawable.avatar3};
+    int []idAvatars = {R.drawable.avatar, R.drawable.avatar2, R.drawable.avatar3,
+            R.drawable.avatar4, R.drawable.avatar5, R.drawable.avatar6,
+            R.drawable.avatar7};
+
     private int curPosAvatar = 0;
+    private Random r = new Random();
 
     public Restaurant(String name, String address, int[] idAvatars) {
         this.name = name;
@@ -50,6 +55,7 @@ public class Restaurant implements ClusterItem, Serializable {
         this.lat = lat;
         this.lon = lon;
         this.idAvatars = idAvatars;
+        this.curPosAvatar = r.nextInt(7);
     }
 
 
@@ -143,6 +149,14 @@ public class Restaurant implements ClusterItem, Serializable {
                 return "android.resource://com.tphien.midproject1412171/drawable/avatar2";
             case 2:
                 return "android.resource://com.tphien.midproject1412171/drawable/avatar3";
+            case 3:
+                return "android.resource://com.tphien.midproject1412171/drawable/avatar4";
+            case 4:
+                return "android.resource://com.tphien.midproject1412171/drawable/avatar5";
+            case 5:
+                return "android.resource://com.tphien.midproject1412171/drawable/avatar6";
+            case 6:
+                return "android.resource://com.tphien.midproject1412171/drawable/avatar7";
         }
         return null;
     }

@@ -56,8 +56,8 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
 
 
     public HomeFragment() {
-        // Required empty public constructor
     }
+
     public HomeFragment(Context context) {
         // Required empty public constructor
         HomeFragment.context = context;

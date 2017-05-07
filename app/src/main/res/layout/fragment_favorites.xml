@@ -7,7 +7,7 @@
     <ListView
         android:id="@+id/lvRestaurants"
         android:layout_width="match_parent"
-        android:layout_height="565dp"
-        android:layout_gravity="bottom"/>
+        android:layout_height="566dp"
+        android:layout_gravity="bottom" />
 
 </FrameLayout>

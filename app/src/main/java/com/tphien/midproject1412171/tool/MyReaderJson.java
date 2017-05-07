@@ -30,7 +30,9 @@ public class MyReaderJson {
         String json = new Scanner(inputStream).useDelimiter(REGEX_INPUT_BOUNDARY_BEGINNING).next();
         JSONArray array = new JSONArray(json);
 
-        int []idAvatars = {R.drawable.avatar, R.drawable.avatar2, R.drawable.avatar3};
+        int []idAvatars = {R.drawable.avatar, R.drawable.avatar2, R.drawable.avatar3,
+                R.drawable.avatar4, R.drawable.avatar5, R.drawable.avatar6,
+                R.drawable.avatar7};
 
         int n = array.length();
         String name = "";

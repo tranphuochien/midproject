@@ -8,12 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.tphien.midproject1412171.R;
+
+import java.util.Set;
 
 
 public class SettingsFragment extends Fragment {
     private static Context context;
-
+    public SettingsFragment() {}
     public SettingsFragment(Context context) {
         SettingsFragment.context = context;
     }
@@ -38,5 +41,11 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Glide.get(context).clearMemory();
     }
 }

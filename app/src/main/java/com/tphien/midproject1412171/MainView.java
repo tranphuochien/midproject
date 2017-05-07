@@ -53,7 +53,6 @@ public class MainView extends AppCompatActivity {
 
     // tags used to attach the fragments
     private static final String TAG_HOME = "home";
-    private static final String TAG_PHOTOS = "photos";
     private static final String TAG_SHARE = "share";
     private static final String TAG_FAVORITES = "favorites";
     private static final String TAG_SETTINGS = "settings";
@@ -115,13 +114,13 @@ public class MainView extends AppCompatActivity {
         txtWebsite.setText(R.string.app_author);
 
         // loading header background image
-        Glide.with(this).load(urlNavHeaderBg)
+        Glide.with(getApplicationContext()).load(urlNavHeaderBg)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgNavHeaderBg);
 
         // Loading profile image
-        Glide.with(this).load(logoApp)
+        Glide.with(getApplicationContext()).load(logoApp)
                 .crossFade()
                 .thumbnail(0.5f)
                 .bitmapTransform(new CircleTransform(this))
@@ -186,13 +185,13 @@ public class MainView extends AppCompatActivity {
             case 0:
                 // home
                 return new HomeFragment(MainView.this);
-            case 2:
+            case 3:
                 // share fragment
                 return new ShareFragment(MainView.this);
-            case 3:
+            case 4:
                 // notifications fragment
                 return new FavoritesFragment(MainView.this);
-            case 4:
+            case 5:
                 // settings fragment
                 return new SettingsFragment(MainView.this);
             default:
@@ -223,26 +222,26 @@ public class MainView extends AppCompatActivity {
                         CURRENT_TAG = TAG_HOME;
                         break;
                     case R.id.nav_map:
-                        //navItemIndex = 1;
-                        //CURRENT_TAG = TAG_PHOTOS;
+                        navItemIndex = 1;
                         startActivity(new Intent(MainView.this, MapView.class));
                         drawer.closeDrawers();
                         return true;
                     case R.id.nav_ar:
+                        navItemIndex = 2;
                         startActivity(new Intent(MainView.this, ARView.class));
                         drawer.closeDrawers();
                         return true;
                     case R.id.nav_share:
-                        navItemIndex = 2;
+                        navItemIndex = 3;
                         CURRENT_TAG = TAG_SHARE;
                         break;
                     case R.id.nav_favorites:
-                        navItemIndex = 3;
+                        navItemIndex = 4;
                         CURRENT_TAG = TAG_FAVORITES;
                         break;
 
                     case R.id.nav_settings:
-                        navItemIndex = 4;
+                        navItemIndex = 5;
                         CURRENT_TAG = TAG_SETTINGS;
                         break;
                     case R.id.nav_about_us:
@@ -405,5 +404,15 @@ public class MainView extends AppCompatActivity {
 
     public interface onRadiusChangeListener {
         void reloadData();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

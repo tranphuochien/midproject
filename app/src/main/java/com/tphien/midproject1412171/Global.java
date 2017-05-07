@@ -5,6 +5,7 @@
 package com.tphien.midproject1412171;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.bumptech.glide.request.target.ViewTarget;
 import com.google.android.gms.maps.model.LatLng;
@@ -19,6 +20,7 @@ public class Global extends Application{
     private static LatLng realLatLng = new LatLng(10.8483638,106.664746);
     private static ArrayList<Restaurant> dataBank = new ArrayList<>();
     private static ArrayList<Restaurant> dataFavorites = new ArrayList<>();
+    public static Context tmpContext;
 
     //mode = true: real Position
     //mode = false: fake Position
