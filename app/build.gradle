@@ -35,5 +35,6 @@ dependencies {
     compile 'com.microsoft.projectoxford:vision:0.4.91'
     compile 'com.microsoft.projectoxford:emotion:1.0.0'
     compile 'com.microsoft.projectoxford:face:1.0.0'
+    compile project(':libraries:tess-two')
     testCompile 'junit:junit:4.12'
 }
