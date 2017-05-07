@@ -1,0 +1,204 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tphien.midproject1412171.fragment.ShareFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="Select an image to analyze"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3">
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Select Image"
+                    android:id="@+id/buttonSelectImage"
+                />
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Share Image"
+                    android:id="@+id/buttonShareImage"
+                    android:onClick="shareImage"/>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/selectedImage"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:background="#E0E0E0"
+                android:layout_weight="7"/>
+        </LinearLayout>
+        <TableLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow>
+                <LinearLayout>
+                    <ImageView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="36dp"
+                        android:maxHeight="36dp"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/ic_anger" />
+                    <TextView
+                        android:id="@+id/tv_anger"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Anger"/>
+
+                </LinearLayout>
+                <LinearLayout>
+                    <ImageView
+                        android:layout_marginLeft="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="36dp"
+                        android:maxHeight="36dp"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/ic_contempt"/>
+                    <TextView
+                        android:id="@+id/tv_contempt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contempt"/>
+                </LinearLayout>
+            </TableRow>
+            <TableRow>
+                <LinearLayout>
+                    <ImageView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="36dp"
+                        android:maxHeight="36dp"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/ic_disgust" />
+                    <TextView
+                        android:id="@+id/tv_disgust"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Disgust"/>
+
+                </LinearLayout>
+                <LinearLayout>
+                    <ImageView
+                        android:layout_marginLeft="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="36dp"
+                        android:maxHeight="36dp"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/ic_fear"/>
+                    <TextView
+                        android:id="@+id/tv_fear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fear"/>
+                </LinearLayout>
+            </TableRow>
+            <TableRow>
+                <LinearLayout>
+                    <ImageView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="36dp"
+                        android:maxHeight="36dp"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/ic_happiness" />
+                    <TextView
+                        android:id="@+id/tv_happiness"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Happy"/>
+
+                </LinearLayout>
+                <LinearLayout>
+                    <ImageView
+                        android:layout_marginLeft="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="36dp"
+                        android:maxHeight="36dp"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/ic_neutral"/>
+                    <TextView
+                        android:id="@+id/tv_neutral"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Neutral"/>
+                </LinearLayout>
+            </TableRow>
+            <TableRow>
+                <LinearLayout>
+                    <ImageView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="36dp"
+                        android:maxHeight="36dp"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/ic_sadness" />
+                    <TextView
+                        android:id="@+id/tv_sadness"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sad"/>
+
+                </LinearLayout>
+                <LinearLayout>
+                    <ImageView
+                        android:layout_marginLeft="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="36dp"
+                        android:maxHeight="36dp"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/ic_surprise"/>
+                    <TextView
+                        android:id="@+id/tv_surprise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Surprise"/>
+                </LinearLayout>
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="right"
+            android:layout_weight="0.60"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextResult"
+                android:layout_width="wrap_content"
+                android:layout_height="137dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textMultiLine" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

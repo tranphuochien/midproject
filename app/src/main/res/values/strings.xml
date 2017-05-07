@@ -11,6 +11,7 @@
     <string name="nav_map">Map</string>
     <string name="nav_ar">Augmented reality</string>
     <string name="nav_favorites">Favorites</string>
+    <string name="nav_share">Share</string>
     <string name="nav_settings">Settings</string>
     <string name="nav_about_us">About Us</string>
 
@@ -18,8 +19,10 @@
     <string-array name="nav_item_activity_titles">
         <item>Home</item>
         <item>Map</item>
+        <item>Share</item>
         <item>Augmented reality</item>
         <item>Favorites</item>
+
         <item>Settings</item>
     </string-array>
 
@@ -34,5 +37,26 @@
     <string name="author_Info">Trần Phước Hiền - 1412171</string>
     <string name="aboutus_description">Food adviser help Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has</string>
     <string name="title_activity_map_view">Map</string>
+
+
+    <!-- Emotion subscription key -->
+    <!-- Please refer to https://www.projectoxford.ai/ to get your subscription key -->
+    <!-- If you have one subscription key, you can add it here to use the service -->
+    <string name="subscription_key">29680f0950744c08b8625248042d9203</string>
+
+
+    <!-- Face subscription key -->
+    <!-- Please refer to http://oxford-portal.azurewebsites.net/doc/general/subscription-key-mgmt to get your subscription key -->
+    <!-- Please note that the Emotion API and Face API have different subscription keys -->
+    <!-- You will need Face subscription key, besides the Emotion subscription keys, for the second part of the sample to work -->
+    <string name="faceSubscription_key">da33d25f58934c2a891e715538852d2d</string>
+
+    <!-- Display strings -->
+    <string name="add_subscription_key_tip_title">Subscription Key is Needed</string>
+    <string name="add_subscription_key_tip">Please put your two subscription keys for Emotion API/Face API to source file \"app/res/values/strings.xml\" to enable Emotion API and Face API calls.</string>
+    <string name="title_activity_analyze">AnalyzeActivity</string>
+    <string name="title_activity_recognize">RecognizeActivity</string>
+    <string name="title_activity_thumbnail">ThumbnailActivity</string>
+
 </resources>
 

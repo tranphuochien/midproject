@@ -28,7 +28,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tphien.midproject1412171.ar.ARView;
 import com.tphien.midproject1412171.fragment.HomeFragment;
-import com.tphien.midproject1412171.fragment.MoviesFragment;
+import com.tphien.midproject1412171.fragment.ShareFragment;
 import com.tphien.midproject1412171.fragment.FavoritesFragment;
 import com.tphien.midproject1412171.fragment.SettingsFragment;
 import com.tphien.midproject1412171.map.MapView;
@@ -54,7 +54,7 @@ public class MainView extends AppCompatActivity {
     // tags used to attach the fragments
     private static final String TAG_HOME = "home";
     private static final String TAG_PHOTOS = "photos";
-    private static final String TAG_MOVIES = "movies";
+    private static final String TAG_SHARE = "share";
     private static final String TAG_FAVORITES = "favorites";
     private static final String TAG_SETTINGS = "settings";
     public static String CURRENT_TAG = TAG_HOME;
@@ -187,8 +187,8 @@ public class MainView extends AppCompatActivity {
                 // home
                 return new HomeFragment(MainView.this);
             case 2:
-                // movies fragment
-                return new MoviesFragment();
+                // share fragment
+                return new ShareFragment(MainView.this);
             case 3:
                 // notifications fragment
                 return new FavoritesFragment(MainView.this);
@@ -229,15 +229,18 @@ public class MainView extends AppCompatActivity {
                         drawer.closeDrawers();
                         return true;
                     case R.id.nav_ar:
-                        //navItemIndex = 2;
-                        //CURRENT_TAG = TAG_MOVIES;
                         startActivity(new Intent(MainView.this, ARView.class));
                         drawer.closeDrawers();
                         return true;
+                    case R.id.nav_share:
+                        navItemIndex = 2;
+                        CURRENT_TAG = TAG_SHARE;
+                        break;
                     case R.id.nav_favorites:
                         navItemIndex = 3;
                         CURRENT_TAG = TAG_FAVORITES;
                         break;
+
                     case R.id.nav_settings:
                         navItemIndex = 4;
                         CURRENT_TAG = TAG_SETTINGS;
