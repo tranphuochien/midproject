@@ -17,23 +17,9 @@
         android:text="Get started"
         tools:layout_editor_absoluteX="148dp"
         tools:layout_editor_absoluteY="298dp"
-        android:layout_marginTop="165dp"
+        android:layout_marginTop="164dp"
         android:layout_marginLeft="50dp"
+        android:layout_marginEnd="131dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:id="@+id/btnTess"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClickTess"
-        android:text="Get started"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="298dp"
-        android:layout_marginTop="165dp"
-        android:layout_marginLeft="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

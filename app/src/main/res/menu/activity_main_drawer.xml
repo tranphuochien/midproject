@@ -26,6 +26,10 @@
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="@string/nav_settings" />
+        <item
+            android:id="@+id/nav_scan"
+            android:icon="@drawable/ic_scanning"
+            android:title="@string/nav_scan" />
     </group>
 
     <item android:title="Other">

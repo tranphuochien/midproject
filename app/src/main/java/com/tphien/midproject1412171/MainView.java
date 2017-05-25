@@ -32,6 +32,7 @@ import com.tphien.midproject1412171.fragment.ShareFragment;
 import com.tphien.midproject1412171.fragment.FavoritesFragment;
 import com.tphien.midproject1412171.fragment.SettingsFragment;
 import com.tphien.midproject1412171.map.MapView;
+import com.tphien.midproject1412171.tesseract.ScanActivity;
 import com.tphien.midproject1412171.tool.CircleTransform;
 
 public class MainView extends AppCompatActivity {
@@ -244,6 +245,10 @@ public class MainView extends AppCompatActivity {
                         navItemIndex = 5;
                         CURRENT_TAG = TAG_SETTINGS;
                         break;
+                    case R.id.nav_scan:
+                        startActivity(new Intent(MainView.this, ScanActivity.class));
+                        drawer.closeDrawers();
+                        return true;
                     case R.id.nav_about_us:
                         // launch new intent instead of loading fragment
                         startActivity(new Intent(MainView.this, AboutUsActivity.class));
