@@ -48,7 +48,6 @@
             android:label="Map" />
         <activity android:name=".RestaurantProfile" />
         <activity android:name=".ar.ARView" />
-        <activity android:name=".SelectImage" />
         <activity android:name=".tesseract.ScanActivity"></activity>
     </application>
 

@@ -36,5 +36,6 @@ dependencies {
     compile 'com.microsoft.projectoxford:vision:0.4.91'
     compile 'com.microsoft.projectoxford:emotion:1.0.0'
     compile 'com.microsoft.projectoxford:face:1.0.0'
+    compile 'com.android.support:design:25.3.0'
     testCompile 'junit:junit:4.12'
 }
