@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "494718943139",
+    "firebase_url": "https://foodadvisor-166308.firebaseio.com",
+    "project_id": "foodadvisor-166308",
+    "storage_bucket": "foodadvisor-166308.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494718943139:android:0346bef1c7c23106",
+        "android_client_info": {
+          "package_name": "com.tphien.midproject1412171"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494718943139-l18o446f8qvj2o4n2h4nn91e8juat7tg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tphien.midproject1412171",
+            "certificate_hash": "8d2e487df3b91aaee22a4fbc17844315c742f3f2"
+          }
+        },
+        {
+          "client_id": "494718943139-rjk3jtvhmgconepi3lv9l3pbgg4623hc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe1VWBDW5B-8nlu_i90pkB2bEOQXGRT0I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494718943139-rjk3jtvhmgconepi3lv9l3pbgg4623hc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

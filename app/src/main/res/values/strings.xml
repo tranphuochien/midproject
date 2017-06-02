@@ -33,7 +33,7 @@
     <string name="action_clear_all">Clear All</string>
     <string name="action_change_radius">Change radius</string>
     <string name="action_mark_all_read">Mark All as Read</string>
-    <string name="privacy_policy">Privacy Policy</string>
+    <string name="sign_out">Sign out</string>
     <string name="app_description">Food Adviser</string>
     <string name="app_author">Author - Tran Phuoc Hien</string>
     <string name="author_Info">Trần Phước Hiền - 1412171</string>
@@ -60,5 +60,14 @@
     <string name="title_activity_recognize">RecognizeActivity</string>
     <string name="title_activity_thumbnail">ThumbnailActivity</string>
 
+    <!-- TODO(user): replace with your real server client ID -->
+    <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
+         from https://console.developers.google.com/ -->
+    <string name="server_client_id">494718943139-rjk3jtvhmgconepi3lv9l3pbgg4623hc.apps.googleusercontent.com</string>
+    <string name="google_status_fmt">Google User: %s</string>
+    <string name="firebase_status_fmt">Firebase User: %s</string>
+    <string name="loading">Loading…</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="disconnect">Disconnect</string>
 </resources>
 

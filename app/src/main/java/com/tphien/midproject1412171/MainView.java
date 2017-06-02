@@ -66,6 +66,10 @@ public class MainView extends AppCompatActivity {
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
 
+    //User info
+    private String mStatusTextView;
+    private String mDetailTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +78,14 @@ public class MainView extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ///Get User info after login
+        mStatusTextView = getIntent().getStringExtra("mStatusTextView");
+        mDetailTextView = getIntent().getStringExtra("mDetailTextView");
+
         mHandler = new Handler();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-
 
         // Navigation view header
         navHeader = navigationView.getHeaderView(0);
@@ -255,8 +262,11 @@ public class MainView extends AppCompatActivity {
                         drawer.closeDrawers();
                         return true;
                     case R.id.nav_privacy_policy:
+                        Intent intent = new Intent(MainView.this, SignoutActivity.class);
+                        intent.putExtra("mStatusTextView", mStatusTextView);
+                        intent.putExtra("mDetailTextView", mDetailTextView);
                         // launch new intent instead of loading fragment
-                        startActivity(new Intent(MainView.this, PrivacyPolicyActivity.class));
+                        startActivity(intent);
                         drawer.closeDrawers();
                         return true;
                     default:
