@@ -37,6 +37,7 @@ import com.tphien.midproject1412171.Global;
 import com.tphien.midproject1412171.Modal.Restaurant;
 import com.tphien.midproject1412171.R;
 import com.tphien.midproject1412171.RestaurantProfile;
+import com.tphien.midproject1412171.tool.CircleTransform;
 import com.tphien.midproject1412171.tool.MultiDrawable;
 
 import org.json.JSONException;
@@ -45,8 +46,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MapView extends FragmentActivity implements OnMapReadyCallback,
         ClusterManager.OnClusterClickListener<Restaurant>,
@@ -109,7 +108,7 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
         private final IconGenerator mIconGenerator = new IconGenerator(getApplicationContext());
         private final IconGenerator mClusterIconGenerator = new IconGenerator(getApplicationContext());
         //private final ImageView mImageView;
-        private final CircleImageView mImageView;
+        private final ImageView mImageView;
         private final ImageView mClusterImageView;
         private final int mDimension;
 
@@ -120,7 +119,7 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
             mClusterIconGenerator.setContentView(multiProfile);
             mClusterImageView = (ImageView) multiProfile.findViewById(R.id.image);
 
-            mImageView = new CircleImageView(getApplicationContext()); //mImageView = new ImageView(getApplicationContext());
+            mImageView = new ImageView(getApplicationContext());
 
             mDimension = (int) getResources().getDimension(R.dimen.custom_profile_image);
             mImageView.setLayoutParams(new ViewGroup.LayoutParams(mDimension, mDimension));
@@ -136,7 +135,14 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
             // Set the info window to show their name.
 
             //mImageView.setImageResource(restaurant.profilePhoto);
-            mImageView.setImageResource(restaurant.getCurAvatar());
+
+
+            Glide.with(getApplicationContext())
+                    .load("").transform( new CircleTransform(getApplicationContext()))
+                    .centerCrop()
+                    .placeholder(restaurant.getCurAvatar())
+                    .into(mImageView);
+
             Bitmap icon = mIconGenerator.makeIcon();
             markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(restaurant.getName());
         }
@@ -321,4 +327,9 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
         mClusterManager.addItems(Global.getDataBank());
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Glide.get(convertView.getContext()).clearMemory();
+    }
 }
