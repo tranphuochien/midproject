@@ -4,9 +4,9 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tphien.midproject1412171.Modal.Restaurant;
-import com.tphien.midproject1412171.tool.CircleTransform;
 
 import java.io.File;
 import java.util.Objects;
@@ -41,6 +40,7 @@ public class RestaurantProfile extends AppCompatActivity {
             ((TextView)findViewById(R.id.tvWebsite)).setText(checkUrl(restaurant.getLinkWebsite()));
             ((TextView)findViewById(R.id.tvReview)).setText(String.format("Review: %s", restaurant.getReview()));
             ImageView header = (ImageView) findViewById(R.id.header_cover_image);
+            ImageView favourite = (ImageView) findViewById(R.id.add_friend);
 
 
             Glide.with(RestaurantProfile.this.getApplicationContext())
@@ -49,6 +49,27 @@ public class RestaurantProfile extends AppCompatActivity {
                     .thumbnail(0.5f)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(header);
+
+            boolean check = Global.checkFavourite(restaurant);
+
+            if (check){
+                favourite.setTag("true");
+                Glide.with(RestaurantProfile.this.getApplicationContext())
+                        .load("android.resource://com.tphien.midproject1412171/drawable/heart_true")
+                        .crossFade()
+                        .thumbnail(0.5f)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(favourite);
+            }
+            else{
+                favourite.setTag("false");
+                Glide.with(RestaurantProfile.this.getApplicationContext())
+                        .load("android.resource://com.tphien.midproject1412171/drawable/heart_false")
+                        .crossFade()
+                        .thumbnail(0.5f)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(favourite);
+            }
         }
     }
 
@@ -108,7 +129,7 @@ public class RestaurantProfile extends AppCompatActivity {
                     .thumbnail(0.5f)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into((ImageView) view);
-
+            Global.removeFavorite(restaurant);
         }
 
     }

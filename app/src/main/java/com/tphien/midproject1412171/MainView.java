@@ -1,11 +1,17 @@
 package com.tphien.midproject1412171;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +20,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,16 +33,32 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.tphien.midproject1412171.ar.ARView;
-import com.tphien.midproject1412171.fragment.HomeFragment;
-import com.tphien.midproject1412171.fragment.ShareFragment;
 import com.tphien.midproject1412171.fragment.FavoritesFragment;
+import com.tphien.midproject1412171.fragment.HomeFragment;
 import com.tphien.midproject1412171.fragment.SettingsFragment;
+import com.tphien.midproject1412171.fragment.ShareFragment;
 import com.tphien.midproject1412171.map.MapView;
 import com.tphien.midproject1412171.tesseract.ScanActivity;
 import com.tphien.midproject1412171.tool.CircleTransform;
 
-public class MainView extends AppCompatActivity {
+public class MainView extends AppCompatActivity implements
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener {
+
+    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    private double currentLatitude;
+    private double currentLongitude;
+
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private View navHeader;
@@ -78,6 +101,20 @@ public class MainView extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                // The next two lines tell the new client that “this” current class will handle connection stuff
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                //fourth line adds the LocationServices API endpoint from GooglePlayServices
+                .addApi(LocationServices.API)
+                .build();
+
+        // Create the LocationRequest object
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(10 * 1000)        // 10 seconds, in milliseconds
+                .setFastestInterval(1 * 1000); // 1 second, in milliseconds
+
         ///Get User info after login
         mStatusTextView = getIntent().getStringExtra("mStatusTextView");
         mDetailTextView = getIntent().getStringExtra("mDetailTextView");
@@ -109,6 +146,14 @@ public class MainView extends AppCompatActivity {
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
         }
+
+        final LocationManager manager = (LocationManager)this.getSystemService( Context.LOCATION_SERVICE );
+
+        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+            Global.setMode(false);
+        }
+        else
+            Global.setMode(true);
     }
 
     /***
@@ -363,14 +408,14 @@ public class MainView extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
             final AlertDialog.Builder popDialog = new AlertDialog.Builder(this);
-            LinearLayout linear=new LinearLayout(this);
+            LinearLayout linear = new LinearLayout(this);
             linear.setOrientation(LinearLayout.VERTICAL);
-            final TextView text=new TextView(this);
+            final TextView text = new TextView(this);
             text.setText("1km");
             text.setPadding(10, 10, 10, 10);
             final SeekBar seek = new SeekBar(this);
             seek.setMax(9);
-            seek.setProgress(Global.radius / 1000 -1);
+            seek.setProgress(Global.radius / 1000 - 1);
             seek.setKeyProgressIncrement(1);
             linear.addView(seek);
             linear.addView(text);
@@ -380,15 +425,19 @@ public class MainView extends AppCompatActivity {
 
             seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    Global.radius = (progress + 1)*1000;
+                    Global.radius = (progress + 1) * 1000;
                     text.setText(String.valueOf(progress + 1) + "km");
 
                     if (curFragment instanceof HomeFragment) {
-                        ((HomeFragment)curFragment).reloadData();
+                        ((HomeFragment) curFragment).reloadData();
                     }
                 }
-                public void onStartTrackingTouch(SeekBar arg0) {}
-                public void onStopTrackingTouch(SeekBar seekBar) {}
+
+                public void onStartTrackingTouch(SeekBar arg0) {
+                }
+
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                }
             });
 
 
@@ -417,6 +466,7 @@ public class MainView extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     public interface onRadiusChangeListener {
         void reloadData();
     }
@@ -429,5 +479,101 @@ public class MainView extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Now lets connect to the API
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.v(this.getClass().getSimpleName(), "onPause()");
+
+        //Disconnect from API onPause()
+        if (mGoogleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+            mGoogleApiClient.disconnect();
+        }
+
+
+    }
+
+    /**
+     * If connected get lat and long
+     *
+     */
+    @Override
+    public void onConnected(Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
+        if (location == null) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+
+        } else {
+            //If everything went fine lets get latitude and longitude
+            currentLatitude = location.getLatitude();
+            currentLongitude = location.getLongitude();
+            Global.setRealPosition(new LatLng(currentLatitude, currentLongitude));
+        }
+    }
+
+
+    @Override
+    public void onConnectionSuspended(int i) {}
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+            /*
+             * Google Play services can resolve some errors it detects.
+             * If the error has a resolution, try sending an Intent to
+             * start a Google Play services activity that can resolve
+             * error.
+             */
+        if (connectionResult.hasResolution()) {
+            try {
+                // Start an Activity that tries to resolve the error
+                connectionResult.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
+                    /*
+                     * Thrown if Google Play services canceled the original
+                     * PendingIntent
+                     */
+            } catch (IntentSender.SendIntentException e) {
+                // Log the error
+                e.printStackTrace();
+            }
+        } else {
+                /*
+                 * If no resolution is available, display a dialog to the
+                 * user with the error.
+                 */
+            Log.e("Error", "Location services connection failed with code " + connectionResult.getErrorCode());
+        }
+    }
+
+    /**
+     * If locationChanges change lat and long
+     *
+     *
+     * @param location
+     */
+    @Override
+    public void onLocationChanged(Location location) {
+        currentLatitude = location.getLatitude();
+        currentLongitude = location.getLongitude();
+        Global.setRealPosition(new LatLng(currentLatitude, currentLongitude));
     }
 }

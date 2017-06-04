@@ -1,7 +1,6 @@
 package com.tphien.midproject1412171.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,6 +28,7 @@ public class FavoritesFragment extends Fragment {
     private static int MAX = 100;
     private static final int BUFFER = 10;
     private boolean isLoadedData = false;
+    ListView listView;
 
     public FavoritesFragment() {}
     public FavoritesFragment(Context context) {
@@ -79,7 +79,7 @@ public class FavoritesFragment extends Fragment {
         restaurantAdapter = new RestaurantAdapter(context, bufferData);
 
         //Process listView
-        final ListView listView =(ListView) view.findViewById(R.id.lvRestaurants);
+        listView =(ListView) view.findViewById(R.id.lvRestaurants);
         listView.setAdapter(restaurantAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -133,6 +133,4 @@ public class FavoritesFragment extends Fragment {
         Glide.get(context).clearMemory();
         Global.tmpContext = context;
     }
-
-
 }
