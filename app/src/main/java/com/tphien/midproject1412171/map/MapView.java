@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -37,7 +38,7 @@ import com.tphien.midproject1412171.Global;
 import com.tphien.midproject1412171.Modal.Restaurant;
 import com.tphien.midproject1412171.R;
 import com.tphien.midproject1412171.RestaurantProfile;
-import com.tphien.midproject1412171.tool.CircleTransform;
+import com.tphien.midproject1412171.tool.BitMapHelper;
 import com.tphien.midproject1412171.tool.MultiDrawable;
 
 import org.json.JSONException;
@@ -108,7 +109,7 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
         private final IconGenerator mIconGenerator = new IconGenerator(getApplicationContext());
         private final IconGenerator mClusterIconGenerator = new IconGenerator(getApplicationContext());
         //private final ImageView mImageView;
-        private final ImageView mImageView;
+        private ImageView mImageView;
         private final ImageView mClusterImageView;
         private final int mDimension;
 
@@ -119,7 +120,7 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
             mClusterIconGenerator.setContentView(multiProfile);
             mClusterImageView = (ImageView) multiProfile.findViewById(R.id.image);
 
-            mImageView = new ImageView(getApplicationContext());
+            mImageView = new ImageView(MapView.this.getApplicationContext());
 
             mDimension = (int) getResources().getDimension(R.dimen.custom_profile_image);
             mImageView.setLayoutParams(new ViewGroup.LayoutParams(mDimension, mDimension));
@@ -134,15 +135,14 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
             // Draw a single Restaurant.
             // Set the info window to show their name.
 
-            //mImageView.setImageResource(restaurant.profilePhoto);
+            mImageView.setImageResource(restaurant.getCurAvatar());
 
 
-            Glide.with(getApplicationContext())
-                    .load("").transform( new CircleTransform(getApplicationContext()))
-                    .centerCrop()
-                    .placeholder(restaurant.getCurAvatar())
+            /*Glide.with(MapView.this)
+                    .load("android.resource://com.tphien.midproject1412171/drawable/ic_sadness")
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(mImageView);
-
+            */
             Bitmap icon = mIconGenerator.makeIcon();
             markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(restaurant.getName());
         }
@@ -158,7 +158,11 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
             for (Restaurant p : cluster.getItems()) {
                 // Draw 4 at most.
                 if (profilePhotos.size() == 4) break;
-                Drawable drawable = getResources().getDrawable(p.getCurAvatar());
+                Bitmap bitmapResized =
+                        BitMapHelper.decodeSampledBitmapFromResource(getResources(),
+                                p.getCurAvatar(), 100,100);
+                Drawable drawable =  new BitmapDrawable(getResources(), bitmapResized);
+
                 drawable.setBounds(0, 0, width, height);
                 profilePhotos.add(drawable);
             }
@@ -254,7 +258,7 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
                 TextView email = (TextView)convertView.findViewById(R.id.email);
                 ImageView imageView = (ImageView)convertView.findViewById(R.id.imageLocation);
 
-                Glide.with(getApplicationContext()).load("").centerCrop().placeholder(curRes.getIdAvatars()[1]).into(imageView);
+                Glide.with(getApplicationContext()).load("").placeholder(curRes.getCurAvatar()).centerCrop().into(imageView);
 
                 name.setText(curRes.getName());
                 location.setText(curRes.getPosition().toString());
@@ -330,6 +334,5 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Glide.get(convertView.getContext()).clearMemory();
     }
 }

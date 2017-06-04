@@ -7,17 +7,19 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F5FFFA">
+        android:background="@color/colorWhite">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
+                android:id="@+id/imageLocation"
                 android:layout_width="100dp"
                 android:layout_height="120dp"
-                android:id="@+id/imageLocation"
-                android:scaleType="fitXY"
-                android:background="@drawable/img_border"/>
+                android:layout_margin="5dp"
+                android:background="@drawable/img_border"
+                android:scaleType="fitXY" />
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -27,12 +29,13 @@
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Name:"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/nameLocation"
@@ -43,14 +46,16 @@
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="8dp"
-                        android:src="@drawable/dotted"/>
+                        android:src="@drawable/dotted" />
+
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="8dp"
-                        android:src="@drawable/dotted"/>
+                        android:src="@drawable/dotted" />
                 </TableRow>
 
                 <TableRow
@@ -62,7 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Location:"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/location"
@@ -73,14 +78,16 @@
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="8dp"
-                        android:src="@drawable/dotted"/>
+                        android:src="@drawable/dotted" />
+
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="8dp"
-                        android:src="@drawable/dotted"/>
+                        android:src="@drawable/dotted" />
                 </TableRow>
 
                 <TableRow
@@ -92,7 +99,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Email:"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/email"
@@ -106,12 +113,15 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
+
+            <LinearLayout />
 
             <Button
                 android:id="@+id/detailBtn"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center|center_horizontal"
                 android:text="Detail" />
         </TableRow>
     </TableLayout>
