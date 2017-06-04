@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -240,15 +241,20 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
 
             @Override
             public View getInfoContents(Marker marker) {
-                Restaurant person = markerRestaurantMap.get(marker.getId());
+                Restaurant curRes = markerRestaurantMap.get(marker.getId());
                 lsClick.setMarker(marker);
                 TextView name= (TextView)convertView.findViewById(R.id.nameLocation);
                 TextView location = (TextView)convertView.findViewById(R.id.location);
                 TextView email = (TextView)convertView.findViewById(R.id.email);
+                ImageView imageView = (ImageView)convertView.findViewById(R.id.imageLocation);
 
-                name.setText(person.getName());
-                location.setText(person.getPosition().toString());
-                email.setText(person.getEmail());
+                Glide.with(getApplicationContext()).load("").centerCrop().placeholder(curRes.getIdAvatars()[1]).into(imageView);
+
+                name.setText(curRes.getName());
+                location.setText(curRes.getPosition().toString());
+                email.setText(curRes.getEmail());
+
+
 
                 mapWrapperLayout.setMarkerWithInfoWindow(marker, convertView);
                 return convertView;

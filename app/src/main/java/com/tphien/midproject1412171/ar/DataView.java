@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.tphien.midproject1412171.Modal.Restaurant;
 import com.tphien.midproject1412171.R;
 import com.tphien.midproject1412171.RestaurantProfile;
-import com.tphien.midproject1412171.map.MapView;
 
 import java.util.ArrayList;
 
@@ -158,7 +157,7 @@ public class DataView {
                 locationTextView[i] = new TextView(_context);
                 locationTextView[i].setText(checkTextToDisplay(locations.get(i).getName()));
                 locationTextView[i].setTextColor(Color.BLACK);
-                locationTextView[i].setBackgroundResource(R.drawable.rounded_rectangle);
+                locationTextView[i].setBackgroundResource(R.drawable.rounded_rectangle_button);
                 locationTextView[i].setId(i);
                 locationTextView[i].setPadding(30,30,30,30);
 

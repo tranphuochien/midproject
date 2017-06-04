@@ -2,10 +2,8 @@ package com.tphien.midproject1412171.ar;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -17,8 +15,6 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -44,18 +40,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.tphien.midproject1412171.Global;
 import com.tphien.midproject1412171.Modal.Restaurant;
-import com.tphien.midproject1412171.tool.ServiceControler;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -372,8 +359,12 @@ public class ARView extends Activity implements SensorEventListener {
             if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
                 mode = true;
             }
+            else
+                mode = true;
 
-            LatLng pos = Global.getCurPosition(mode);
+            Global.setMode(mode);
+
+            LatLng pos = Global.getCurPosition();
 
             Location curPos = new Location("current position");
             Restaurant tmp;

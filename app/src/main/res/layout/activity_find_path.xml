@@ -1,82 +1,108 @@
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#4285F4"
     xmlns:android="http://schemas.android.com/apk/res/android" >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_weight="10">
 
             <EditText
                 android:id="@+id/edit_text_origin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#6495ED"
                 android:hint="Enter origin address" />
 
             <EditText
                 android:id="@+id/edit_text_destination"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#6495ED"
                 android:hint="Enter destination address" />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"></LinearLayout>
 
         <ImageView
             android:id="@+id/btnSwitchAddress"
             android:layout_gravity="right"
-            android:layout_width="40dp"
-            android:layout_height="80dp"
-            android:src="@drawable/switch_address"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/vertical_orientation_arrows"
+            android:background="#6495ED"
             android:onClick="onClickBtnSwitch"
-            android:layout_weight="1"/>
+            android:layout_weight="2"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:orientation="horizontal">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
             android:id="@+id/button_find_path"
-            android:text="Find Path"
-            android:onClick="onClickBtnFindPath"/>
+            android:src="@drawable/segment_path"
+            android:onClick="onClickBtnFindPath"
+            android:background="@drawable/rounded_rectangle_button"
+            android:scaleType="fitCenter"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"></LinearLayout>
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:src="@drawable/ic_distance"
+            android:scaleType="centerInside"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
             android:id="@+id/text_view_distance"
+            android:gravity="center_vertical"
             android:text="0 km"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"/>
 
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:layout_weight="1"
             android:src="@drawable/ic_clock"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
             android:id="@+id/text_view_time"
-            android:text="0 km"
+            android:gravity="center_vertical"
+            android:text="0 s"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"/>
 
