@@ -113,9 +113,9 @@ public class MainView extends AppCompatActivity implements
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10 * 1000)        // 10 seconds, in milliseconds
-                .setFastestInterval(1 * 1000); // 1 second, in milliseconds
+                .setFastestInterval(1000); // 1 second, in milliseconds
 
-        ///Get User info after login
+        ///Get user's info after login
         mStatusTextView = getIntent().getStringExtra("mStatusTextView");
         mDetailTextView = getIntent().getStringExtra("mDetailTextView");
 
@@ -133,7 +133,6 @@ public class MainView extends AppCompatActivity implements
 
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
-
 
         // load nav menu header data
         loadNavHeader();
@@ -292,7 +291,6 @@ public class MainView extends AppCompatActivity implements
                         navItemIndex = 4;
                         CURRENT_TAG = TAG_FAVORITES;
                         break;
-
                     case R.id.nav_settings:
                         navItemIndex = 5;
                         CURRENT_TAG = TAG_SETTINGS;
@@ -566,7 +564,6 @@ public class MainView extends AppCompatActivity implements
 
     /**
      * If locationChanges change lat and long
-     *
      *
      * @param location
      */

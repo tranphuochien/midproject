@@ -1,13 +1,10 @@
 package com.tphien.midproject1412171.fragment;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +23,7 @@ import com.tphien.midproject1412171.R;
 import com.tphien.midproject1412171.RestaurantAdapter;
 import com.tphien.midproject1412171.tool.MyReaderJson;
 import com.tphien.midproject1412171.tool.ServiceControler;
-
 import org.json.JSONException;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -47,16 +42,13 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
     private int postLast;
     private static int MAX = 100;
     private static final int BUFFER = 10;
-    private boolean isLoadedData = false;
+    private boolean isLoadedData = false; // mutex
     private static Context context;
     private TextView tvCurPos;
     private TextView tvResult;
-    private boolean mode;
     static final String LINK_REQUEST = "http://group9cntn.me/data_restaurants.json";
 
-
-    public HomeFragment() {
-    }
+    public HomeFragment() {}
 
     public HomeFragment(Context context) {
         // Required empty public constructor
@@ -66,7 +58,6 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     private void loadData() {
@@ -165,55 +156,32 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
         isLoadedData = false;
     }
 
-
-
-    private boolean buildAlertMessageNoGps() {
-        final boolean[] mode = new boolean[1];
-        mode[0] = false;
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                        mode[0] = true;
-                    }
-                })
-                .setNegativeButton("No, use fake GPS", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        dialog.cancel();
-                        mode[0] = false;
-                    }
-                });
-        final AlertDialog alert = builder.create();
-        alert.show();
-
-        return mode[0];
-    }
-
     private ArrayList<Restaurant> getRestaurantsNearby() {
         ArrayList<Restaurant> result = new ArrayList<>();
-        int radius = Global.radius;
-        int nLocations = Global.getDataBank().size();
-
+        float distance = 0f;
+        int radius = Global.radius; // radius searching
+        int nLocations = Global.getDataBank().size(); // total locations in data bank
         LatLng pos = Global.getCurPosition();
-
         Location curPos = new Location("current position");
+        Location targetPos = new Location("current position");
         Restaurant tmp;
+
         curPos.setLatitude(pos.latitude);
         curPos.setLongitude(pos.longitude);
-        Location targetPos = new Location("current position");
+
         for (int i = 0; i < nLocations; i++) {
             tmp = Global.getDataByIndex(i);
             targetPos.setLatitude(tmp.getLat());
             targetPos.setLongitude(tmp.getLon());
-            float k = 0;
-            k = curPos.distanceTo(targetPos);
-            if (k <= radius)
+            distance = curPos.distanceTo(targetPos);
+            if (distance <= radius)
                 result.add(tmp);
         }
+
+        //If not found restaurant, add dummy location
         if (result.size() == 0)
             result.add(new Restaurant());
+
         return result;
     }
 
@@ -232,6 +200,8 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
         @Override
         protected ArrayList<Restaurant> doInBackground(String... params) {
             ArrayList<Restaurant> items = new ArrayList<>();
+
+            //If the internet is not available. load data from local
             if (!ServiceControler.isNetworkAvailable(context)) {
                 InputStream inputStream = getResources().openRawResource(R.raw.data_restaurants);
 
@@ -301,6 +271,7 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
 
     //When radius or GPS signal change
     public void reloadData() {
+        //down mutext
         isLoadedData = false;
         nearbyDataBank = getRestaurantsNearby();
         MAX = nearbyDataBank.size();
@@ -314,6 +285,7 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
                 Global.getCurPosition().longitude);
         tvResult.setText("There are "+ MAX +" locals near your");
 
+        //up mutex
         isLoadedData = true;
     }
 

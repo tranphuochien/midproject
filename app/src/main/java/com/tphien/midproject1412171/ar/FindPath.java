@@ -25,6 +25,7 @@ import com.tphien.midproject1412171.R;
 import com.tphien.midproject1412171.map.DirectionFinder;
 import com.tphien.midproject1412171.map.DirectionFinderListener;
 import com.tphien.midproject1412171.map.Route;
+import com.tphien.midproject1412171.tool.ServiceControler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,10 +61,15 @@ public class FindPath extends FragmentActivity implements OnMapReadyCallback, Di
         editTextOrigin.setText("My position");
         editTextDestination.setText(getIntent().getExtras().getString("distination"));
 
-        try {
-            new DirectionFinder(this, beginLat, beginLon,endLat,endLon, true).execute();
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        if (ServiceControler.isNetworkAvailable(FindPath.this)) {
+            try {
+                new DirectionFinder(this, beginLat, beginLon, endLat, endLon, true).execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            ServiceControler.buildAlertMessageNoNetwork(this);
         }
 
 
@@ -82,11 +88,14 @@ public class FindPath extends FragmentActivity implements OnMapReadyCallback, Di
             Toast.makeText(this, "Please enter destination address!", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        try {
-            new DirectionFinder(this, origin, destination, false).execute();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (ServiceControler.isNetworkAvailable(FindPath.this)) {
+            try {
+                new DirectionFinder(this, origin, destination, false).execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            ServiceControler.buildAlertMessageNoNetwork(this);
         }
     }
 

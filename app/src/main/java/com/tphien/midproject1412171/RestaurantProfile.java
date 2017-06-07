@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tphien.midproject1412171.Modal.Restaurant;
+import com.tphien.midproject1412171.ar.FindPath;
 
 import java.io.File;
 import java.util.Objects;
@@ -167,5 +168,16 @@ public class RestaurantProfile extends AppCompatActivity {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT,restaurant.getLinkWebsite());
         startActivity(intent);
+    }
+
+    public void onClickDirectionBut(View view) {
+        Intent intent = new Intent(RestaurantProfile.this, FindPath.class);
+        intent.putExtra("beginLat",Global.getCurPosition().latitude);
+        intent.putExtra("beginLon",Global.getCurPosition().longitude);
+        intent.putExtra("endLat",restaurant.getLat());
+        intent.putExtra("endLon", restaurant.getLon());
+        intent.putExtra("distination",restaurant.getName());
+
+        RestaurantProfile.this.startActivity(intent);
     }
 }

@@ -21,10 +21,11 @@
             android:id="@+id/profile_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/header_cover_image"
             android:background="#ebca0707"
             android:elevation="4dp"
-            android:paddingBottom="24dp">
+            android:paddingBottom="24dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/header_cover_image">
 
             <TextView
                 android:id="@+id/user_profile_name"
@@ -49,11 +50,7 @@
                 android:layout_below="@+id/user_profile_name"
                 android:tag="false"
                 android:layout_centerHorizontal="true" />
-
-
         </RelativeLayout>
-
-
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -85,6 +82,13 @@
                     android:layout_gravity="right"
                     android:src="@drawable/ic_share"
                     android:onClick="onClickShareBut"/>
+                <ImageView
+                    android:id="@+id/DirectionBut"
+                    android:layout_width="52dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="right"
+                    android:src="@drawable/direction"
+                    android:onClick="onClickDirectionBut"/>
             </LinearLayout>
 
             <LinearLayout
@@ -111,6 +115,7 @@
                     android:layout_gravity="right"
                     android:src="@drawable/phone_receiver"
                     android:onClick="onClickCallBut"/>
+
                 <ImageView
                     android:id="@+id/SmsBut"
                     android:layout_width="52dp"
