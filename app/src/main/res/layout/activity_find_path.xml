@@ -16,7 +16,7 @@
             android:layout_weight="10">
             <fragment
                 android:id="@+id/place_autocomplete_origin"
-                android:layout_width="290dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
                 tools:layout_editor_absoluteY="0dp"
@@ -28,7 +28,7 @@
 
             <fragment
                 android:id="@+id/place_autocomplete_distination"
-                android:layout_width="290dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
                 tools:layout_editor_absoluteY="0dp"
