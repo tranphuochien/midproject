@@ -69,5 +69,7 @@
     <string name="loading">Loading…</string>
     <string name="signed_out">Signed Out</string>
     <string name="disconnect">Disconnect</string>
+
+    <string name="str_atv_places">Enter Place Here</string>
 </resources>
 

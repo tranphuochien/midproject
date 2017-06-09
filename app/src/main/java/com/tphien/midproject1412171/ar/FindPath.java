@@ -7,11 +7,16 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,12 +38,14 @@ import java.util.List;
 public class FindPath extends FragmentActivity implements OnMapReadyCallback, DirectionFinderListener {
 
     private GoogleMap mMap;
-    private EditText editTextOrigin;
-    private EditText editTextDestination;
+    private PlaceAutocompleteFragment fragmentOrigin;
+    private PlaceAutocompleteFragment fragmentDestination;
     private List<Marker> originMarkers = new ArrayList<>();
     private List<Marker> destinationMarkers = new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
+    String origin = "";
+    String destination = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +56,37 @@ public class FindPath extends FragmentActivity implements OnMapReadyCallback, Di
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        editTextOrigin = (EditText)findViewById(R.id.edit_text_origin);
-        editTextDestination = (EditText)findViewById(R.id.edit_text_destination);
+        fragmentOrigin = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_origin);
+        fragmentDestination = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_distination);
+
+
+        fragmentOrigin.getView().setBackground(getResources().getDrawable(R.drawable.rounded_edittext));
+        ((EditText)fragmentOrigin.getView().findViewById(R.id.place_autocomplete_search_input)).setTextSize(12.0f);
+        fragmentDestination.getView().setBackground(getResources().getDrawable(R.drawable.rounded_edittext));
+        ((EditText)fragmentDestination.getView().findViewById(R.id.place_autocomplete_search_input)).setTextSize(12.0f);
+
+        fragmentOrigin.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                origin = (String) place.getAddress();
+            }
+
+            @Override
+            public void onError(Status status) {
+            }
+        });
+        fragmentDestination.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                destination = (String) place.getAddress();
+            }
+
+            @Override
+            public void onError(Status status) {
+            }
+        });
 
         double beginLat, beginLon, endLat, endLon;
         beginLat = getIntent().getExtras().getDouble("beginLat");
@@ -58,9 +94,8 @@ public class FindPath extends FragmentActivity implements OnMapReadyCallback, Di
         endLat = getIntent().getExtras().getDouble("endLat");
         endLon = getIntent().getExtras().getDouble("endLon");
 
-        editTextOrigin.setText("My position");
-        editTextDestination.setText(getIntent().getExtras().getString("distination"));
-
+        fragmentOrigin.setText("My position");
+        fragmentDestination.setText(getIntent().getExtras().getString("distination"));
 
         if (ServiceControler.isNetworkAvailable(FindPath.this)) {
             try {
@@ -71,14 +106,19 @@ public class FindPath extends FragmentActivity implements OnMapReadyCallback, Di
         } else {
             ServiceControler.buildAlertMessageNoNetwork(this);
         }
-
-
     }
 
-    private void sendRequest() {
-        String origin = editTextOrigin.getText().toString();
-        String destination = editTextDestination.getText().toString();
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+
+
+    private void sendRequest() {
         if (origin.isEmpty()) {
             Toast.makeText(this, "Please enter origin address!", Toast.LENGTH_SHORT).show();
             return;
@@ -98,7 +138,6 @@ public class FindPath extends FragmentActivity implements OnMapReadyCallback, Di
             ServiceControler.buildAlertMessageNoNetwork(this);
         }
     }
-
 
     /**
      * Manipulates the map once available.
@@ -190,8 +229,6 @@ public class FindPath extends FragmentActivity implements OnMapReadyCallback, Di
     }
 
     public void onClickBtnSwitch(View view) {
-        String origin = editTextOrigin.getText().toString();
-        String destination = editTextDestination.getText().toString();
         String tmp = "";
         if (origin.isEmpty() || destination.isEmpty()) {
             return;
@@ -201,7 +238,7 @@ public class FindPath extends FragmentActivity implements OnMapReadyCallback, Di
         origin = destination;
         destination = tmp;
 
-        editTextOrigin.setText(origin);
-        editTextDestination.setText(destination);
+        fragmentOrigin.setText(origin);
+        fragmentDestination.setText(destination);
     }
 }

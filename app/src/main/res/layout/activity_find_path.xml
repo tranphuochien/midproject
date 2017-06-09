@@ -1,8 +1,9 @@
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="#4183D7"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -13,28 +14,29 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_weight="10">
-
-            <EditText
-                android:id="@+id/edit_text_origin"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+            <fragment
+                android:id="@+id/place_autocomplete_origin"
+                android:layout_width="290dp"
+                android:layout_height="wrap_content"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                tools:layout_editor_absoluteY="0dp"
+                tools:layout_editor_absoluteX="8dp"
                 android:layout_weight="1"
                 android:layout_marginTop="3dp"
                 android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-                android:padding="5dp"
-                android:background="@drawable/rounded_edittext"
-                android:hint="Enter origin address" />
+                android:layout_marginRight="3dp" />
 
-            <EditText
-                android:id="@+id/edit_text_destination"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+            <fragment
+                android:id="@+id/place_autocomplete_distination"
+                android:layout_width="290dp"
+                android:layout_height="wrap_content"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                tools:layout_editor_absoluteY="0dp"
+                tools:layout_editor_absoluteX="8dp"
                 android:layout_weight="1"
-                android:layout_margin="3dp"
-                android:padding="5dp"
-                android:background="@drawable/rounded_edittext"
-                android:hint="Enter destination address" />
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp" />
 
         </LinearLayout>
 

@@ -8,8 +8,6 @@ import com.tphien.midproject1412171.R;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 import org.json.JSONArray;
