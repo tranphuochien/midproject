@@ -1,35 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background_main"
+    android:background="@drawable/cupcake_background"
     tools:context="com.tphien.midproject1412171.MainActivity">
 
-
-    <Button
-        android:id="@+id/btnHome"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/main_text"
+        android:text="Explore your places!"
+        android:layout_gravity="center"
+        android:textSize="34dp"
+        android:textColor="#FFFAF0"
+        android:textStyle="bold"
+        android:layout_marginTop="300dp"/>
+
+    <at.markushi.ui.CircleButton
+        android:id="@+id/btnHome"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:onClick="onClickGetStarted"
-        android:text="Get started"
+        android:src="@drawable/ic_action_tick"
+        app:cb_color="#BA55D3"
+        app:cb_pressedRingWidth="1dp"
         tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="298dp"
-        android:layout_marginTop="164dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginEnd="131dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        tools:layout_editor_absoluteY="298dp" />
 
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
         android:visibility="visible"
         tools:visibility="gone" />
 
-</RelativeLayout>
+</LinearLayout>

@@ -15,7 +15,8 @@
     <ImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imageViewAvatar"
-        android:layout_width="70dp"
+        android:layout_width="0dp"
+        android:layout_weight="2"
         android:layout_height="70dp"
         android:clickable="true"
         android:layout_marginRight="10dp"
@@ -23,15 +24,16 @@
 
 
     <LinearLayout
-        android:layout_width= "200dp"
-        android:layout_height="wrap_content"
+        android:layout_width= "0dp"
+        android:layout_height="70dp"
         android:orientation="vertical"
-        android:layout_weight="2">
+        android:layout_weight="5">
         <TextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_height="0dp"
+            android:text="test"
+            android:layout_weight="1"
             android:textColor="#446CB3"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -39,22 +41,24 @@
         <TextView
             android:id="@+id/tvPhoneNumber"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:text="test1"
+            android:layout_weight="2"
             android:textSize="10sp"/>
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:gravity="right">
 
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_weight="1.5">
         <ImageButton
             android:id="@+id/detailBut"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/information_icon"
+            android:scaleType="centerCrop"/>
     </LinearLayout>
 </LinearLayout>

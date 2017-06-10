@@ -70,12 +70,6 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
             vh.imgViewCircle = (ImageView) convertView.findViewById(R.id.imageViewAvatar);
             vh.btnDetail = (ImageButton) convertView.findViewById(R.id.detailBut);
 
-            Glide.with(context.getApplicationContext()).load("android.resource://com.tphien.midproject1412171/drawable/arrow_right")
-                    .crossFade()
-                    .thumbnail(0.5f)
-                    .bitmapTransform(new CircleTransform(context.getApplicationContext()))
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(vh.btnDetail);
             vh.btnDetail.setBackgroundColor(Color.TRANSPARENT);
 
             // Cache the viewHolder object inside the fresh view
@@ -121,7 +115,6 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 
                 //((ImageView)view).setImageResource(idAvatar);
                 Glide.with(context.getApplicationContext()).load(getItem(position).getStringResourceCurAvatar())
-                        .crossFade()
                         .thumbnail(0.5f)
                         .bitmapTransform(new CircleTransform(context.getApplicationContext()))
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -145,12 +138,12 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
         vh.tvAddress.setText(restaurant.getAddress());
         vh.tvName.setTextColor(Color.parseColor("#6C7A89"));
 
-        Glide.with(context.getApplicationContext()).load(getItem(position).getStringResourceCurAvatar())
-                .crossFade()
+        Glide.with(context.getApplicationContext()).load("")
+                .placeholder(getItem(position).getCurAvatar())
                 .thumbnail(0.5f)
                 .bitmapTransform(new CircleTransform(context.getApplicationContext()))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into((ImageView) vh.imgViewCircle);
+                .into(vh.imgViewCircle);
 
         return convertView;
     }

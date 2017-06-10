@@ -6,9 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -16,6 +14,8 @@ import com.tphien.midproject1412171.Global;
 import com.tphien.midproject1412171.Modal.Restaurant;
 import com.tphien.midproject1412171.R;
 import com.tphien.midproject1412171.RestaurantAdapter;
+import com.tphien.midproject1412171.tool.ListView3d;
+import com.tphien.midproject1412171.tool.SimpleDynamics;
 
 import java.util.ArrayList;
 
@@ -23,12 +23,13 @@ public class FavoritesFragment extends Fragment {
     private static Context context;
     private ArrayList<Restaurant> favoriteDataBank;
     private ArrayList<Restaurant> bufferData;
+    private ArrayList<Restaurant> list;
     private RestaurantAdapter restaurantAdapter;
     private int postLast = 0;
     private static int MAX = 100;
     private static final int BUFFER = 10;
     private boolean isLoadedData = false;
-    ListView listView;
+    private ListView3d listView;
 
     public FavoritesFragment() {}
     public FavoritesFragment(Context context) {
@@ -42,7 +43,7 @@ public class FavoritesFragment extends Fragment {
             FavoritesFragment.context = Global.tmpContext;
     }
 
-    private boolean updateBufferData() {
+    /*private boolean updateBufferData() {
         if (postLast > MAX)
             return false;
 
@@ -65,31 +66,43 @@ public class FavoritesFragment extends Fragment {
             return true;
         }
         return false;
-    }
+    }*/
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
 
-        //Load data into data bank and load first buffer data
-        loadData();
 
-        restaurantAdapter = new RestaurantAdapter(context, bufferData);
+        //Load data into data bank and load first buffer data
+        //loadData();
+        list = Global.getDataFavorites();
+
+        restaurantAdapter = new RestaurantAdapter(context, list);
+
 
         //Process listView
-        listView =(ListView) view.findViewById(R.id.lvRestaurants);
+        listView =(ListView3d) view.findViewById(R.id.lvRestaurants);
         listView.setAdapter(restaurantAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
                 Toast.makeText(context, "row click", Toast.LENGTH_SHORT).show();
             }
+        });*/
+
+        listView.setDynamics(new SimpleDynamics(0.9f, 0.6f));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adaptẻ, View view, int position, long id) {
+                Toast.makeText(context, "row click", Toast.LENGTH_SHORT).show();
+            }
         });
 
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        /*listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {}
 
@@ -104,12 +117,12 @@ public class FavoritesFragment extends Fragment {
                     }
                 }
             }
-        });
+        });*/
 
         return view;
     }
 
-    private void loadData() {
+    /*private void loadData() {
         bufferData = new ArrayList<>();
         favoriteDataBank = Global.getDataFavorites();
         MAX = favoriteDataBank.size();
@@ -117,7 +130,7 @@ public class FavoritesFragment extends Fragment {
             isLoadedData = true;
 
         updateBufferData();
-    }
+    }*/
 
 
 
