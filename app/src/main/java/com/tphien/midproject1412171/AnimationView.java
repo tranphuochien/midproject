@@ -61,7 +61,8 @@ public class AnimationView extends android.support.v7.widget.AppCompatImageView
                 play_frame=0;
                 
                 // Again call onDraw method
-                postInvalidate();
+                //postInvalidate();
+                mIsPlaying = false;
             }
             else
             {
@@ -86,6 +87,7 @@ public class AnimationView extends android.support.v7.widget.AppCompatImageView
                     postInvalidate();
                 }
             }
+
         }
     }
     
@@ -115,5 +117,12 @@ public class AnimationView extends android.support.v7.widget.AppCompatImageView
     	
     	// Again call onDraw method
     	postInvalidate();
+    }
+
+    public void stopAnimation(){
+        mStartPlaying = false;
+
+        // Again call onDraw method
+        postInvalidate();
     }
 }

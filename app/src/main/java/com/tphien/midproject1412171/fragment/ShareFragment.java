@@ -31,6 +31,7 @@ import com.microsoft.projectoxford.emotion.EmotionServiceClient;
 import com.microsoft.projectoxford.emotion.EmotionServiceRestClient;
 import com.microsoft.projectoxford.emotion.contract.RecognizeResult;
 import com.microsoft.projectoxford.emotion.rest.EmotionServiceException;
+import com.tphien.midproject1412171.AnimationView;
 import com.tphien.midproject1412171.R;
 import com.tphien.midproject1412171.tool.ImageHelper;
 
@@ -78,6 +79,7 @@ public class ShareFragment extends Fragment {
     Animation hide_fab_1;
     Animation show_fab_3;
     Animation hide_fab_3;
+    AnimationView anim_view;
 
     // Flag to indicate the request of the next task to be performed
     private static final int REQUEST_TAKE_PHOTO = 0;
@@ -202,10 +204,13 @@ public class ShareFragment extends Fragment {
         mEditText.setText("Select an image to analyze");
         initFloatingBtn();
 
+        // Get AnimationView reference see animation_main.xml
+        anim_view = (AnimationView) view.findViewById(R.id.anim_view);
+        anim_view.loadAnimation("spark", 18,0,0);
+
         // Inflate the layout for this fragment
         return view;
     }
-
 
     public void doRecognize() {
         fab.setEnabled(false);
@@ -250,9 +255,6 @@ public class ShareFragment extends Fragment {
                 break;
         }
     }
-
-
-
 
     private String saveBitmap(Bitmap bmp)
     {
@@ -357,6 +359,9 @@ public class ShareFragment extends Fragment {
                         tvSadness.setText(String.format("Sad: %1$.5f", r.scores.sadness));
                         tvSupprise.setText(String.format("Surprise: %1$.5f", r.scores.surprise));
 
+                        if (r.scores.neutral > 0.5f) {
+                            anim_view.playAnimation();
+                        }
                         faceCanvas.drawRect(r.faceRectangle.left,
                                 r.faceRectangle.top,
                                 r.faceRectangle.left + r.faceRectangle.width,
@@ -382,8 +387,8 @@ public class ShareFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        anim_view=null;
     }
-
 
     private void expandFAB() {
         //Floating Action Button 1
@@ -423,5 +428,4 @@ public class ShareFragment extends Fragment {
         fab3.startAnimation(hide_fab_3);
         fab3.setClickable(false);
     }
-
 }

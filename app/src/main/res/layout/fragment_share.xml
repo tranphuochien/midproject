@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.tphien.midproject1412171.fragment.ShareFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -36,7 +36,9 @@
                 android:ems="10" />
         </LinearLayout>
         <TableLayout
-            android:layout_margin="10dp"
+            android:layout_marginTop="350dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TableRow>
@@ -171,9 +173,15 @@
                 </LinearLayout>
             </TableRow>
         </TableLayout>
+        <com.tphien.midproject1412171.AnimationView
+            android:id="@+id/anim_view"
+            android:layout_width="150dip"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="50dp"
+            android:layout_height="150dip"  />
 
 
-    </LinearLayout>
+    </RelativeLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
