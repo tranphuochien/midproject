@@ -192,4 +192,8 @@ public class MainActivity extends AppCompatActivity
             mProgressDialog.dismiss();
         }
     }
+
+    public void testButton(View view) {
+        startActivity(new Intent(MainActivity.this, TestAnimation.class ));
+    }
 }

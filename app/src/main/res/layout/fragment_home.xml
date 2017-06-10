@@ -9,17 +9,39 @@
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/rounded_edittext"
+            android:clickable="true"
+            android:elevation="4dp"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/CurLocationlBut"
+                android:layout_width="52dp"
+                android:layout_height="27dp"
+                android:layout_gravity="right"
+                android:src="@drawable/flag_map_marker"
+                android:onClick="onClickCurLocation"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.01"
+                android:text="My current position"
+                android:id="@+id/tvCurPos"/>
+        </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
             android:textAlignment="center"
-            android:id="@+id/tvCurPos"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor= "#446CB3"
             android:id="@+id/tvResult"/>
     </LinearLayout>
 

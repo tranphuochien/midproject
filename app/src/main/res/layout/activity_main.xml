@@ -30,9 +30,7 @@
         android:onClick="onClickGetStarted"
         android:src="@drawable/ic_action_tick"
         app:cb_color="#BA55D3"
-        app:cb_pressedRingWidth="1dp"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="298dp" />
+        app:cb_pressedRingWidth="1dp" />
 
 
     <com.google.android.gms.common.SignInButton

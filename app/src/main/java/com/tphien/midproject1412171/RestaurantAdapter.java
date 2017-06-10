@@ -138,8 +138,7 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
         vh.tvAddress.setText(restaurant.getAddress());
         vh.tvName.setTextColor(Color.parseColor("#6C7A89"));
 
-        Glide.with(context.getApplicationContext()).load("")
-                .placeholder(getItem(position).getCurAvatar())
+        Glide.with(context.getApplicationContext()).load(getItem(position).getStringResourceCurAvatar())
                 .thumbnail(0.5f)
                 .bitmapTransform(new CircleTransform(context.getApplicationContext()))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
