@@ -19,21 +19,36 @@
         android:layout_height="match_parent"
         android:columnCount="2"
         android:rowCount="4">
-        <ImageView
-            android:layout_gravity="center"
+        <RelativeLayout
+            android:id="@+id/relativeAvatar"
             android:layout_width="wrap_content"
-            android:id="@+id/imgViewAboutUs"
             android:layout_height="wrap_content"
-            android:layout_columnSpan="2"/>
+            android:layout_gravity="center"
+            android:layout_columnSpan="2">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:id="@+id/imgViewAboutUs"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:id="@+id/imgViewAboutUs2" />
+        </RelativeLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor='@color/colorWhite'
+            android:layout_marginTop="20dp"
             android:id="@+id/tvAuthor"
+            android:textStyle="bold"
             android:layout_columnSpan="2"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textStyle="italic"
             android:textColor= '@color/colorWhite'
             android:id="@+id/tvDescription"
             android:layout_columnSpan="2"/>

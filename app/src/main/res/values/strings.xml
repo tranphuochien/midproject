@@ -36,8 +36,8 @@
     <string name="sign_out">Sign out</string>
     <string name="app_description">Food Adviser</string>
     <string name="app_author">Author - Tran Phuoc Hien</string>
-    <string name="author_Info">Trần Phước Hiền - 1412171</string>
-    <string name="aboutus_description">Food adviser help Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has</string>
+    <string name="author_Info">Trần Phước Hiền-1412171 | Lê Đình Hân-1412153</string>
+    <string name="aboutus_description">FoodAdvisor helps people who know what they want to eat. We guide them to the best restaurant or cafe to visit at their preferred area. Another reason which makes us unique is our listings are curated via a rating system by local food lovers who visit our domain</string>
     <string name="title_activity_map_view">Map</string>
 
 
@@ -53,6 +53,11 @@
     <!-- You will need Face subscription key, besides the Emotion subscription keys, for the second part of the sample to work -->
     <string name="faceSubscription_key">da33d25f58934c2a891e715538852d2d</string>
 
+    <!-- TODO(user): replace with your real server client ID -->
+    <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
+         from https://console.developers.google.com/ -->
+    <string name="server_client_id">494718943139-rjk3jtvhmgconepi3lv9l3pbgg4623hc.apps.googleusercontent.com</string>
+
     <!-- Display strings -->
     <string name="add_subscription_key_tip_title">Subscription Key is Needed</string>
     <string name="add_subscription_key_tip">Please put your two subscription keys for Emotion API/Face API to source file \"app/res/values/strings.xml\" to enable Emotion API and Face API calls.</string>
@@ -60,10 +65,6 @@
     <string name="title_activity_recognize">RecognizeActivity</string>
     <string name="title_activity_thumbnail">ThumbnailActivity</string>
 
-    <!-- TODO(user): replace with your real server client ID -->
-    <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
-         from https://console.developers.google.com/ -->
-    <string name="server_client_id">494718943139-rjk3jtvhmgconepi3lv9l3pbgg4623hc.apps.googleusercontent.com</string>
     <string name="google_status_fmt">Google User: %s</string>
     <string name="firebase_status_fmt">Firebase User: %s</string>
     <string name="loading">Loading…</string>

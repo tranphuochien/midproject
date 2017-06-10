@@ -1,7 +1,11 @@
 package com.tphien.midproject1412171.fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +28,9 @@ import com.tphien.midproject1412171.R;
 import com.tphien.midproject1412171.RestaurantAdapter;
 import com.tphien.midproject1412171.tool.MyReaderJson;
 import com.tphien.midproject1412171.tool.ServiceControler;
+
 import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -33,6 +40,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 
 public class HomeFragment extends Fragment implements onRadiusChangeListener {
@@ -46,6 +55,7 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
     private static Context context;
     private TextView tvCurPos;
     private TextView tvResult;
+    private ImageView curLocation;
     static final String LINK_REQUEST = "http://group9cntn.me/data_restaurants.json";
 
     public HomeFragment() {}
@@ -100,7 +110,6 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
         //Load data into data bank and load first buffer data
         loadData();
 
-
         restaurantAdapter = new RestaurantAdapter(context, bufferData);
 
         //Process listView
@@ -132,10 +141,21 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
         });
 
         //Process titlle
+        curLocation = (ImageView) view.findViewById(R.id.CurLocationlBut);
         tvCurPos = (TextView) view.findViewById(R.id.tvCurPos);
-        tvCurPos.setText("Your position: ");
         tvResult = (TextView) view.findViewById(R.id.tvResult);
+        tvCurPos.setText("Your position: ");
         tvResult.setText("There are 0 locals near your");
+        curLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                String url = "http://maps.google.com/?q=" + Global.getCurPosition().latitude + ","
+                        + Global.getCurPosition().longitude;
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -281,8 +301,23 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
         updateBufferData();
         restaurantAdapter.notifyDataSetChanged();
 
-        tvCurPos.setText("Your position: " + Global.getCurPosition().latitude+ "," +
-                Global.getCurPosition().longitude);
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(context, Locale.getDefault());
+
+        if (ServiceControler.isNetworkAvailable(context)) {
+            try {
+                addresses = geocoder.getFromLocation(Global.getCurPosition().latitude, Global.getCurPosition().longitude, 1);
+                tvCurPos.setText("Your position: " + addresses.get(0).getAddressLine(0)
+                );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            tvCurPos.setText("Your position: " + Global.getCurPosition().latitude + ", " +
+                    Global.getCurPosition().longitude);
+        }
+
         tvResult.setText("There are "+ MAX +" locals near your");
 
         //up mutex

@@ -25,7 +25,7 @@ import java.util.List;
 
 public class DirectionFinder {
     private static final String DIRECTION_URL_API = "https://maps.googleapis.com/maps/api/directions/json?";
-    private static final String GOOGLE_API_KEY = "AIzaSyAteWWYLsglbh3Qm6U_mNd96TrJnsX8BE8";
+    private static final String GOOGLE_API_KEY ="AIzaSyAteWWYLsglbh3Qm6U_mNd96TrJnsX8BE8";
     private DirectionFinderListener listener;
     private String origin = "";
     private String destination = "";
@@ -60,7 +60,6 @@ public class DirectionFinder {
         String sBLon = URLEncoder.encode(String.valueOf(bLon), "utf-8");
         String sELat = URLEncoder.encode(String.valueOf(eLat), "utf-8");
         String sELon = URLEncoder.encode(String.valueOf(eLon), "utf-8");
-
         //Find string
         if (!typeFind)
             return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&key=" + GOOGLE_API_KEY;

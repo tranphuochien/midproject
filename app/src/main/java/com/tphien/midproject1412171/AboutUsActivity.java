@@ -11,6 +11,7 @@ import android.view.Surface;
 import android.webkit.WebView;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -19,7 +20,10 @@ import com.tphien.midproject1412171.tool.CircleTransform;
 
 public class AboutUsActivity extends AppCompatActivity {
     private static final String authorAvatar = "android.resource://com.tphien.midproject1412171/drawable/author";
+    private static final String authorAvatar2 = "android.resource://com.tphien.midproject1412171/drawable/author_han";
     private ImageView imageView;
+    private ImageView imageView2;
+    private RelativeLayout relativeLayout;
     private TextView tvAuthor;
     private TextView tvDesc;
     private WebView webView;
@@ -28,7 +32,9 @@ public class AboutUsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
 
+        relativeLayout = (RelativeLayout) findViewById(R.id.relativeAvatar);
         imageView = (ImageView)findViewById(R.id.imgViewAboutUs);
+        imageView2 = (ImageView)findViewById(R.id.imgViewAboutUs2);
         tvAuthor = (TextView) findViewById(R.id.tvAuthor);
         tvDesc = (TextView)findViewById(R.id.tvDescription);
         webView = (WebView)findViewById(R.id.webviewSkill);
@@ -39,16 +45,22 @@ public class AboutUsActivity extends AppCompatActivity {
                 .bitmapTransform(new CircleTransform(this))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
+        Glide.with(this).load(authorAvatar2)
+                .crossFade()
+                .thumbnail(0.5f)
+                .bitmapTransform(new CircleTransform(this))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imageView2);
 
         tvAuthor.setText(R.string.author_Info);
         tvDesc.setText(R.string.aboutus_description);
 
-        String summary = "<html><body>My skill: <br/>" +
-                "<ul><li>Skill 1</li>" +
-                "<li>Skill 1</li>" +
-                "<li>Skill 2</li>" +
-                "<li>Skill 3</li>" +
-                "<li>Skill 4</li>" +
+        String summary = "<html><body>Our project's skills: <br/>" +
+                "<ul><li>Using ListView, custom UI listview, load more data when scroll</li>" +
+                "<li>Using Google map, clustering marker, custom UI marker</li>" +
+                "<li>Using VR</li>" +
+                "<li>Using API of Microsoft ProjectOxford</li>" +
+                "<li>Signing with Google Account, auth with firebase</li>" +
                 "<li>Skill 5</li>" +
                 "<li>Skill 6</li>" +
                 "<li>Skill 7</li>" +
@@ -143,7 +155,7 @@ public class AboutUsActivity extends AppCompatActivity {
         paramsAvatar.columnSpec = GridLayout.spec(0,2);
         paramsAvatar.rowSpec = GridLayout.spec(0);
         paramsAvatar.setGravity(Gravity.CENTER);
-        imageView.setLayoutParams(paramsAvatar);
+        relativeLayout.setLayoutParams(paramsAvatar);
 
         GridLayout.LayoutParams paramsAuthor =  new GridLayout.LayoutParams();
         paramsAuthor.columnSpec = GridLayout.spec(0,2);
@@ -168,7 +180,7 @@ public class AboutUsActivity extends AppCompatActivity {
         paramsAvatar.columnSpec = GridLayout.spec(0);
         paramsAvatar.rowSpec = GridLayout.spec(0);
         paramsAvatar.setGravity(Gravity.CENTER);
-        imageView.setLayoutParams(paramsAvatar);
+        relativeLayout.setLayoutParams(paramsAvatar);
 
         GridLayout.LayoutParams paramsAuthor =  new GridLayout.LayoutParams();
         paramsAuthor.columnSpec = GridLayout.spec(0);
