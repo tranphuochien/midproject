@@ -21,16 +21,17 @@
 
     <at.markushi.ui.CircleButton
         android:id="@+id/btnHome"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:onClick="onClickGetStarted"
         android:src="@drawable/ic_action_tick"
+        android:scaleType="centerCrop"
         app:cb_color="#BA55D3"
-        app:cb_pressedRingWidth="1dp" />
+        app:cb_pressedRingWidth="0dp" />
 
 
     <com.google.android.gms.common.SignInButton
