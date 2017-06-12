@@ -116,6 +116,7 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
                 //((ImageView)view).setImageResource(idAvatar);
                 Glide.with(context.getApplicationContext()).load(getItem(position).getStringResourceCurAvatar())
                         .thumbnail(0.5f)
+                        .fitCenter()
                         .bitmapTransform(new CircleTransform(context.getApplicationContext()))
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into((ImageView) view);
@@ -140,6 +141,7 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 
         Glide.with(context.getApplicationContext()).load(getItem(position).getStringResourceCurAvatar())
                 .thumbnail(0.5f)
+                .fitCenter()
                 .bitmapTransform(new CircleTransform(context.getApplicationContext()))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(vh.imgViewCircle);

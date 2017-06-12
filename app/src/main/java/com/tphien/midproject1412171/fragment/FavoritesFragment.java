@@ -13,8 +13,8 @@ import com.bumptech.glide.Glide;
 import com.tphien.midproject1412171.Global;
 import com.tphien.midproject1412171.Modal.Restaurant;
 import com.tphien.midproject1412171.R;
-import com.tphien.midproject1412171.RestaurantAdapter;
 import com.tphien.midproject1412171.tool.ListView3d;
+import com.tphien.midproject1412171.tool.LocationAdapter3d;
 import com.tphien.midproject1412171.tool.SimpleDynamics;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class FavoritesFragment extends Fragment {
     private ArrayList<Restaurant> favoriteDataBank;
     private ArrayList<Restaurant> bufferData;
     private ArrayList<Restaurant> list;
-    private RestaurantAdapter restaurantAdapter;
+    private LocationAdapter3d restaurantAdapter;
     private int postLast = 0;
     private static int MAX = 100;
     private static final int BUFFER = 10;
@@ -80,7 +80,8 @@ public class FavoritesFragment extends Fragment {
         //loadData();
         list = Global.getDataFavorites();
 
-        restaurantAdapter = new RestaurantAdapter(context, list);
+        restaurantAdapter = new LocationAdapter3d(context);
+        restaurantAdapter.addAll(list);
 
 
         //Process listView
