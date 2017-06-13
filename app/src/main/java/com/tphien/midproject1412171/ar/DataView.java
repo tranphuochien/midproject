@@ -81,11 +81,7 @@ public class DataView {
 	private FragmentManager fragmentManager;
 
 
-<<<<<<< HEAD
-	DataView(Context ctx) {
-=======
 	public DataView(Context ctx, FragmentManager fragmentManager) {
->>>>>>> ec2d303090826b00e79ef945ddcefb19fdc9697a
 		this._context = ctx;
 		this.fragmentManager =fragmentManager;
 	}
@@ -306,17 +302,10 @@ public class DataView {
                                     _context.startActivity(intent);
                                 }
                                 else {
-<<<<<<< HEAD
-                                    Intent intent = new Intent(_context, RestaurantProfile.class );
-                                    Bundle bundle = new Bundle();
-                                    bundle.putSerializable("restaurant_info",locations.get(id));
-                                    intent.putExtras(bundle);
-                                    _context.startActivity(intent);
-=======
 									MyCustomDialog fragment1 = new MyCustomDialog();
 									fragment1.restaurant = locations.get(id);
 									fragment1.show(fragmentManager, "");
->>>>>>> ec2d303090826b00e79ef945ddcefb19fdc9697a
+
                                 }
                             }
                         });

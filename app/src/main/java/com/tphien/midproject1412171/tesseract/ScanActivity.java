@@ -1,31 +1,10 @@
 package com.tphien.midproject1412171.tesseract;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
-import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
+import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
 
-import com.googlecode.tesseract.android.TessBaseAPI;
 import com.tphien.midproject1412171.R;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 public class ScanActivity extends AppCompatActivity {
     // Tesseract
@@ -42,9 +21,9 @@ public class ScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
-        initTesseract();
+        //initTesseract();
     }
-
+        /*
     public void onClickScan(View view) {
         startCameraActivity();
     }
@@ -202,4 +181,6 @@ public class ScanActivity extends AppCompatActivity {
         }
         startActivity(callIntent);
     }
+
+    */
 }
