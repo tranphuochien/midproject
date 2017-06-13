@@ -32,7 +32,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:gravity="center"
-                    android:text="Shop Coupon"
+                    android:text="Restaurant Profile"
                     android:textSize="25dp"
                     android:textStyle="bold"
                     android:textColor="#FF0000"/>

@@ -47,7 +47,6 @@
         <activity
             android:name=".ar.FindPath"
             android:label="Map" />
-        <activity android:name=".RestaurantProfile" />
         <activity android:name=".ar.ARView" />
         <activity android:name=".tesseract.ScanActivity" />
         <activity android:name=".TestAnimation"></activity>

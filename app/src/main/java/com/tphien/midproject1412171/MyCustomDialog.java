@@ -32,7 +32,7 @@ public class MyCustomDialog extends DialogFragment {
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        dialog.setContentView(R.layout.activity_restaurant_profile);
+        dialog.setContentView(R.layout.restaurant_profile);
         dialog.getWindow().setBackgroundDrawable(
                 new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
