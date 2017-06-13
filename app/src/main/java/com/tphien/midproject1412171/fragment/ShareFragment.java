@@ -206,7 +206,10 @@ public class ShareFragment extends Fragment {
 
         // Get AnimationView reference see animation_main.xml
         anim_view = (AnimationView) view.findViewById(R.id.anim_view);
-        anim_view.loadAnimation("spark", 18,0,0);
+        anim_view.loadAnimation("dinosaur", 14,0,0);
+
+        //Disable button share util take a photo
+        mButtonShareImage.setEnabled(false);
 
         // Inflate the layout for this fragment
         return view;
@@ -359,7 +362,7 @@ public class ShareFragment extends Fragment {
                         tvSadness.setText(String.format("Sad: %1$.5f", r.scores.sadness));
                         tvSupprise.setText(String.format("Surprise: %1$.5f", r.scores.surprise));
 
-                        if (r.scores.neutral > 0.5f) {
+                        if (r.scores.happiness > 0.6f) {
                             anim_view.playAnimation();
                         }
                         faceCanvas.drawRect(r.faceRectangle.left,
@@ -376,6 +379,11 @@ public class ShareFragment extends Fragment {
             }
 
             fab.setEnabled(true);
+
+            //auto hide fab
+            hideFAB();
+            FAB_Status = false;
+            mButtonShareImage.setEnabled(true);
         }
     }
 

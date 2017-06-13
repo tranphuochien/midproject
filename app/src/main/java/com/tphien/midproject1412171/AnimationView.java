@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -40,7 +41,7 @@ public class AnimationView extends android.support.v7.widget.AppCompatImageView
     protected void onDraw(Canvas c)
     {
     	/******* onDraw method called first time and when postInvalidate() called *****/
-        
+        SystemClock.sleep(200);
     	//Log.d(TAG, "onDraw called");
         if (mStartPlaying)
         {
@@ -119,10 +120,4 @@ public class AnimationView extends android.support.v7.widget.AppCompatImageView
     	postInvalidate();
     }
 
-    public void stopAnimation(){
-        mStartPlaying = false;
-
-        // Again call onDraw method
-        postInvalidate();
-    }
 }

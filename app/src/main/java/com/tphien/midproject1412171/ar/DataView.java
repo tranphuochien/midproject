@@ -35,41 +35,41 @@ import java.util.ArrayList;
 
 public class DataView {
 
-	RelativeLayout[] locationMarkerView;
-	ImageView[] subjectImageView;
-	RelativeLayout.LayoutParams[] layoutParams;
+	private RelativeLayout[] locationMarkerView;
+	private ImageView[] subjectImageView;
+	private RelativeLayout.LayoutParams[] layoutParams;
 	RelativeLayout.LayoutParams[] subjectImageViewParams;
-	RelativeLayout.LayoutParams[] subjectTextViewParams;
-	TextView[] locationTextView;
-	ArrayList<Restaurant> locations;
-    int nLocation =0;
-	int[] nextXofText ;
+	private RelativeLayout.LayoutParams[] subjectTextViewParams;
+	private TextView[] locationTextView;
+	private ArrayList<Restaurant> locations;
+    private int nLocation =0;
+	private int[] nextXofText ;
 	ArrayList<Integer> 	nextYofText = new ArrayList<Integer>();
-	double[] bearings;
-	float angleToShift;
-	float yPosition;
-	Location currentLocation = new Location("provider");
-	Location destinedLocation = new Location("provider");
+	private double[] bearings;
+	private float angleToShift;
+	private float yPosition;
+	private Location currentLocation = new Location("provider");
+	private Location destinedLocation = new Location("provider");
 
 	/** is the view Inited? */
-	boolean isInit = false;
-	boolean isDrawing = true;
+    private boolean isInit = false;
+	private boolean isDrawing = true;
 	boolean isFirstEntry;
-	Context _context;
+	private Context _context;
 	/** width and height of the view*/
-	int width, height;
-	android.hardware.Camera camera;
+	private int width, height;
+	private android.hardware.Camera camera;
     private static Context context;
-	float yawPrevious;
-	float yaw = 0;
-	float pitch = 0;
-	float roll = 0;
+	private float yawPrevious;
+	private float yaw = 0;
+	private float pitch = 0;
+	private float roll = 0;
 
-	DisplayMetrics displayMetrics;
-	static RadarView radarPoints;
+	private DisplayMetrics displayMetrics;
+	private static RadarView radarPoints;
 
-	RadarLines lrl = new RadarLines();
-	RadarLines rrl = new RadarLines();
+	private RadarLines lrl = new RadarLines();
+	private RadarLines rrl = new RadarLines();
 	float rx = 10, ry = 20;
 	public float addX = 0, addY = 0;
 	public float degreetopixelWidth;
@@ -80,15 +80,15 @@ public class DataView {
     private Location mCurrent;
 
 
-	public DataView(Context ctx) {
+	DataView(Context ctx) {
 		this._context = ctx;
 	}
 
-	public boolean isInited() {
+	boolean isInited() {
 		return isInit;
 	}
 
-	public void updateLocation(Location curPos){
+	void updateLocation(Location curPos){
 		if (curPos == null) {
 			mCurrent = new Location("provider");
 			mCurrent.setLatitude(10.8428107);
@@ -300,11 +300,11 @@ public class DataView {
                                     _context.startActivity(intent);
                                 }
                                 else {
-									Intent intent = new Intent(_context, RestaurantProfile.class );
-									Bundle bundle = new Bundle();
-									bundle.putSerializable("restaurant_info",locations.get(id));
-									intent.putExtras(bundle);
-									_context.startActivity(intent);
+                                    Intent intent = new Intent(_context, RestaurantProfile.class );
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("restaurant_info",locations.get(id));
+                                    intent.putExtras(bundle);
+                                    _context.startActivity(intent);
                                 }
                             }
                         });
@@ -312,18 +312,12 @@ public class DataView {
                 AlertDialog alert = builder.create();
                 alert.show();
             }
-
-
             //locationMarkerView[v.getId()].bringToFront();
             //Toast.makeText(_context, " LOCATION NO : "+v.getId(), Toast.LENGTH_SHORT).show();
-
-
         }
     }
 
     public void draw(PaintUtils dw, float yaw, float pitch, float roll) {
-
-
 		this.yaw = yaw;
 		this.pitch = pitch;
 		this.roll = roll;
