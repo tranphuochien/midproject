@@ -4,18 +4,15 @@
 
 package com.tphien.midproject1412171;
 
+import android.app.FragmentManager;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-
-
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -27,16 +24,17 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tphien.midproject1412171.Modal.Restaurant;
 import com.tphien.midproject1412171.tool.CircleTransform;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
     private final Context context;
     private static int position;
+    private FragmentManager fragmentManager;
 
-    public RestaurantAdapter(@NonNull Context context, @NonNull ArrayList<Restaurant> restaurants) {
+    public RestaurantAdapter(@NonNull Context context, @NonNull ArrayList<Restaurant> restaurants, FragmentManager fragmentManager) {
         super(context, 0, restaurants);
         this.context = context;
+        this.fragmentManager = fragmentManager;
     }
 
     private static class ViewHolder {
@@ -54,7 +52,7 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         // Get the data item for this position
-        Restaurant restaurant = getItem(position);
+        final Restaurant restaurant = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder vh; // view lookup cache stored in tag
 
@@ -115,8 +113,9 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 
                 //((ImageView)view).setImageResource(idAvatar);
                 Glide.with(context.getApplicationContext()).load(getItem(position).getStringResourceCurAvatar())
-                        .thumbnail(0.5f)
+                        .thumbnail(0.1f)
                         .fitCenter()
+                        .skipMemoryCache(true)
                         .bitmapTransform(new CircleTransform(context.getApplicationContext()))
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into((ImageView) view);
@@ -126,11 +125,9 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
         vh.btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, RestaurantProfile.class );
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("restaurant_info", (Serializable) getItem(position));
-                intent.putExtras(bundle);
-                context.startActivity(intent);
+                MyCustomDialog fragment1 = new MyCustomDialog();
+                fragment1.restaurant = restaurant;
+                fragment1.show(fragmentManager, "");
             }
         });
 
@@ -140,8 +137,9 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
         vh.tvName.setTextColor(Color.parseColor("#6C7A89"));
 
         Glide.with(context.getApplicationContext()).load(getItem(position).getStringResourceCurAvatar())
-                .thumbnail(0.5f)
+                .thumbnail(0.1f)
                 .fitCenter()
+                .skipMemoryCache(true)
                 .bitmapTransform(new CircleTransform(context.getApplicationContext()))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(vh.imgViewCircle);

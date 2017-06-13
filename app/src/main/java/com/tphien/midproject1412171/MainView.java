@@ -236,18 +236,18 @@ public class MainView extends AppCompatActivity implements
         switch (navItemIndex) {
             case 0:
                 // home
-                return new HomeFragment(MainView.this);
+                return new HomeFragment(MainView.this, getFragmentManager());
             case 3:
                 // share fragment
                 return new ShareFragment(MainView.this);
             case 4:
                 // notifications fragment
-                return new FavoritesFragment(MainView.this);
+                return new FavoritesFragment(MainView.this, getFragmentManager());
             case 5:
                 // settings fragment
                 return new SettingsFragment(MainView.this);
             default:
-                return new HomeFragment(MainView.this);
+                return new HomeFragment(MainView.this, getFragmentManager());
         }
     }
 

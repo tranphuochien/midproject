@@ -1,13 +1,13 @@
 package com.tphien.midproject1412171.ar;
 
 import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.location.Location;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,8 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tphien.midproject1412171.Modal.Restaurant;
+import com.tphien.midproject1412171.MyCustomDialog;
 import com.tphien.midproject1412171.R;
-import com.tphien.midproject1412171.RestaurantProfile;
 
 import java.util.ArrayList;
 
@@ -78,10 +78,16 @@ public class DataView {
 	public float bearing;
 	public int[][] coordinateArray = new int[20][2];
     private Location mCurrent;
+	private FragmentManager fragmentManager;
 
 
+<<<<<<< HEAD
 	DataView(Context ctx) {
+=======
+	public DataView(Context ctx, FragmentManager fragmentManager) {
+>>>>>>> ec2d303090826b00e79ef945ddcefb19fdc9697a
 		this._context = ctx;
+		this.fragmentManager =fragmentManager;
 	}
 
 	boolean isInited() {
@@ -300,11 +306,17 @@ public class DataView {
                                     _context.startActivity(intent);
                                 }
                                 else {
+<<<<<<< HEAD
                                     Intent intent = new Intent(_context, RestaurantProfile.class );
                                     Bundle bundle = new Bundle();
                                     bundle.putSerializable("restaurant_info",locations.get(id));
                                     intent.putExtras(bundle);
                                     _context.startActivity(intent);
+=======
+									MyCustomDialog fragment1 = new MyCustomDialog();
+									fragment1.restaurant = locations.get(id);
+									fragment1.show(fragmentManager, "");
+>>>>>>> ec2d303090826b00e79ef945ddcefb19fdc9697a
                                 }
                             }
                         });

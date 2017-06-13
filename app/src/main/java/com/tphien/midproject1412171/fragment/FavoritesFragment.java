@@ -1,5 +1,6 @@
 package com.tphien.midproject1412171.fragment;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,10 +31,13 @@ public class FavoritesFragment extends Fragment {
     private static final int BUFFER = 10;
     private boolean isLoadedData = false;
     private ListView3d listView;
+    private FragmentManager fragmentManager;
 
     public FavoritesFragment() {}
-    public FavoritesFragment(Context context) {
+    public FavoritesFragment(Context context, FragmentManager fragmentManager) {
+
         FavoritesFragment.context = context;
+        this.fragmentManager = fragmentManager;
     }
 
     @Override
@@ -80,7 +84,7 @@ public class FavoritesFragment extends Fragment {
         //loadData();
         list = Global.getDataFavorites();
 
-        restaurantAdapter = new LocationAdapter3d(context);
+        restaurantAdapter = new LocationAdapter3d(context, fragmentManager);
         restaurantAdapter.addAll(list);
 
 

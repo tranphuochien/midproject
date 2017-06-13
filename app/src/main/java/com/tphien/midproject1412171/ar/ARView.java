@@ -409,7 +409,7 @@ public class ARView extends Activity implements SensorEventListener {
         addContentView(radarMarkerView, new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         if (!isInited) {
-            dataView = new DataView(ARView.this);
+            dataView = new DataView(ARView.this, getFragmentManager());
             paintScreen = new PaintUtils();
             isInited = true;
         }
