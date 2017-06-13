@@ -2,7 +2,6 @@ package com.tphien.midproject1412171;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 
 public class TestAnimation extends AppCompatActivity {
@@ -26,15 +25,7 @@ public class TestAnimation extends AppCompatActivity {
         Button play_button = (Button) this.findViewById(R.id.play_button);
 
 
-        play_button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
 
-                //Play Both Animation
-                anim_view.playAnimation();
-                anim_view1.playAnimation();
-
-            }
-        });
     }
 
     @Override

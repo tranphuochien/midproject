@@ -1,10 +1,31 @@
 package com.tphien.midproject1412171.tesseract;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
+import com.googlecode.tesseract.android.TessBaseAPI;
 import com.tphien.midproject1412171.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class ScanActivity extends AppCompatActivity {
     // Tesseract
@@ -15,15 +36,16 @@ public class ScanActivity extends AppCompatActivity {
     public static final int RQST_CODE_TESS_CMR = 0;
     protected String _path;
     protected boolean _taken;
+    private final String TAG = "Tesseract";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
-        //initTesseract();
+        initTesseract();
     }
-        /*
+
     public void onClickScan(View view) {
         startCameraActivity();
     }
@@ -39,16 +61,17 @@ public class ScanActivity extends AppCompatActivity {
     }
 
     private void initTesseract() {
+        Log.d(TAG, DATA_PATH);
         String[] paths = new String[] { DATA_PATH, DATA_PATH + "tessdata/" };
 
         for (String path : paths) {
             File dir = new File(path);
             if (!dir.exists()) {
                 if (!dir.mkdirs()) {
-                    //Log.v(TAG, "ERROR: Creation of directory " + path + " on sdcard failed");
+                    Log.d(TAG, "ERROR: Creation of directory " + path + " on sdcard failed");
                     return;
                 } else {
-                    //Log.v(TAG, "Created directory " + path + " on sdcard");
+                    Log.d(TAG, "Created directory " + path + " on sdcard");
                 }
             }
 
@@ -78,9 +101,8 @@ public class ScanActivity extends AppCompatActivity {
                 //gin.close();
                 out.close();
 
-                //Log.v(TAG, "Copied " + lang + " traineddata");
+
             } catch (IOException e) {
-                //Log.e(TAG, "Was unable to copy " + lang + " traineddata " + e.toString());
             }
         }
 
@@ -181,6 +203,4 @@ public class ScanActivity extends AppCompatActivity {
         }
         startActivity(callIntent);
     }
-
-    */
 }
