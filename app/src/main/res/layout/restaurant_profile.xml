@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:minHeight="1000dp"
     android:minWidth="1000dp"
-android:background="@drawable/rounded_dialog"
-android:orientation="vertical" >
+    android:background="@drawable/rounded_dialog"
+    android:orientation="vertical" >
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@ android:orientation="vertical" >
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:gravity="center"
-                    android:text="Restaurant Profile"
+                    android:text="Shop Coupon"
                     android:textSize="25dp"
                     android:textStyle="bold"
                     android:textColor="#FF0000"/>

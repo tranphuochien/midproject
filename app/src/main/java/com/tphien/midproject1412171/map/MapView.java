@@ -2,7 +2,6 @@ package com.tphien.midproject1412171.map;
 
 import android.Manifest;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -36,8 +35,8 @@ import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.ui.IconGenerator;
 import com.tphien.midproject1412171.Global;
 import com.tphien.midproject1412171.Modal.Restaurant;
+import com.tphien.midproject1412171.MyCustomDialog;
 import com.tphien.midproject1412171.R;
-import com.tphien.midproject1412171.RestaurantProfile;
 import com.tphien.midproject1412171.tool.BitMapHelper;
 import com.tphien.midproject1412171.tool.MultiDrawable;
 
@@ -235,11 +234,9 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
             @Override
             protected void onClickConfirmed(View v, Marker marker) {
                 Restaurant restaurant = markerRestaurantMap.get(marker.getId());
-                Intent intent = new Intent(MapView.this, RestaurantProfile.class );
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("restaurant_info",restaurant);
-                intent.putExtras(bundle);
-                MapView.this.startActivity(intent);
+                MyCustomDialog fragment1 = new MyCustomDialog();
+                fragment1.restaurant = restaurant;
+                fragment1.show(getFragmentManager(), "");
             }
         };
         detailBtn.setOnTouchListener(lsClick);

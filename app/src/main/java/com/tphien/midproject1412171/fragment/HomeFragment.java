@@ -1,5 +1,6 @@
 package com.tphien.midproject1412171.fragment;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
@@ -56,13 +57,15 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
     private TextView tvCurPos;
     private TextView tvResult;
     private ImageView curLocation;
+    private FragmentManager fragmentManager;
     static final String LINK_REQUEST = "http://group9cntn.me/data_restaurants.json";
 
     public HomeFragment() {}
 
-    public HomeFragment(Context context) {
+    public HomeFragment(Context context, FragmentManager fragmentManager) {
         // Required empty public constructor
         HomeFragment.context = context;
+        this.fragmentManager = fragmentManager;
     }
 
     @Override
@@ -110,7 +113,7 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
         //Load data into data bank and load first buffer data
         loadData();
 
-        restaurantAdapter = new RestaurantAdapter(context, bufferData);
+        restaurantAdapter = new RestaurantAdapter(context, bufferData, fragmentManager);
 
         //Process listView
         final ListView listView =(ListView) view.findViewById(R.id.lvRestaurants);
