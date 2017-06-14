@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tphien.midproject1412171.Modal.Restaurant;
-import com.tphien.midproject1412171.MyCustomDialog;
+import com.tphien.midproject1412171.RestaurantInfoDialog;
 import com.tphien.midproject1412171.R;
 
 
@@ -112,7 +112,7 @@ public class LocationAdapter3d extends ArrayAdapter {
             btnDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MyCustomDialog fragment1 = new MyCustomDialog();
+                    RestaurantInfoDialog fragment1 = new RestaurantInfoDialog();
                     fragment1.restaurant = (Restaurant) getItem(position);
                     fragment1.show(fragmentManager, "");
                 }

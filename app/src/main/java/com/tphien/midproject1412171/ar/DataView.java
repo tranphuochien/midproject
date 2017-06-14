@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tphien.midproject1412171.Modal.Restaurant;
-import com.tphien.midproject1412171.MyCustomDialog;
+import com.tphien.midproject1412171.RestaurantInfoDialog;
 import com.tphien.midproject1412171.R;
 
 import java.util.ArrayList;
@@ -302,7 +302,7 @@ public class DataView {
                                     _context.startActivity(intent);
                                 }
                                 else {
-									MyCustomDialog fragment1 = new MyCustomDialog();
+									RestaurantInfoDialog fragment1 = new RestaurantInfoDialog();
 									fragment1.restaurant = locations.get(id);
 									fragment1.show(fragmentManager, "");
 

@@ -4,12 +4,17 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -19,32 +24,43 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tphien.midproject1412171.Modal.Restaurant;
 import com.tphien.midproject1412171.ar.FindPath;
+import com.tphien.midproject1412171.databinding.RestaurantProfileBinding;
 
 import java.io.File;
 import java.util.Objects;
 
-public class MyCustomDialog extends DialogFragment {
+public class RestaurantInfoDialog extends DialogFragment {
     public Restaurant restaurant;
+    private RestaurantProfileBinding binding;
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        Log.d("dialog", "onCreateView");
+        super.onCreateView(inflater, container, savedInstanceState);
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.restaurant_profile, container, false);
+        View view = binding.getRoot();
+        binding.setRestaurant(restaurant);
+
+        ((TextView)view.findViewById(R.id.tvRating)).setText(String.format("Rating: %d", restaurant.getRating()));
+        return view;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Log.d("dialog", "onCreateDialog");
         final Dialog dialog = new Dialog(getActivity());
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         dialog.setContentView(R.layout.restaurant_profile);
+
+
+        //dialog.setContentView(binding.getRoot());
         dialog.getWindow().setBackgroundDrawable(
                 new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
-
-        ((TextView)dialog.findViewById(R.id.tvRating)).setText(String.format("Rating: %d", restaurant.getRating()));
-        ((TextView)dialog.findViewById(R.id.user_profile_name)).setText(restaurant.getName());
-        ((TextView)dialog.findViewById(R.id.tvEmail)).setText(restaurant.getEmail());
-        ((TextView)dialog.findViewById(R.id.tvNumberPhone)).setText(restaurant.getPhoneNumber());
-        ((TextView)dialog.findViewById(R.id.tvAddress)).setText(restaurant.getAddress());
-        ((TextView)dialog.findViewById(R.id.tvWebsite)).setText(checkUrl(restaurant.getLinkWebsite()));
-        ((TextView)dialog.findViewById(R.id.tvReview)).setText(String.format("Review: %s", restaurant.getReview()));
         ImageView header = (ImageView) dialog.findViewById(R.id.header_cover_image);
         ImageView favourite = (ImageView) dialog.findViewById(R.id.add_friend);
 

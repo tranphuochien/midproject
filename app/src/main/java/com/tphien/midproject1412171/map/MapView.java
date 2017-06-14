@@ -35,7 +35,7 @@ import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.ui.IconGenerator;
 import com.tphien.midproject1412171.Global;
 import com.tphien.midproject1412171.Modal.Restaurant;
-import com.tphien.midproject1412171.MyCustomDialog;
+import com.tphien.midproject1412171.RestaurantInfoDialog;
 import com.tphien.midproject1412171.R;
 import com.tphien.midproject1412171.tool.BitMapHelper;
 import com.tphien.midproject1412171.tool.MultiDrawable;
@@ -234,7 +234,7 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
             @Override
             protected void onClickConfirmed(View v, Marker marker) {
                 Restaurant restaurant = markerRestaurantMap.get(marker.getId());
-                MyCustomDialog fragment1 = new MyCustomDialog();
+                RestaurantInfoDialog fragment1 = new RestaurantInfoDialog();
                 fragment1.restaurant = restaurant;
                 fragment1.show(getFragmentManager(), "");
             }
