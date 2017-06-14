@@ -125,8 +125,7 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
         vh.btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RestaurantInfoDialog fragment1 = new RestaurantInfoDialog();
-                fragment1.restaurant = restaurant;
+                RestaurantInfoDialog fragment1 = new RestaurantInfoDialog(restaurant);
                 fragment1.show(fragmentManager, "");
             }
         });

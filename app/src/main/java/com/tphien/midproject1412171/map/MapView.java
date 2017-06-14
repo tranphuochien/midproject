@@ -234,8 +234,7 @@ public class MapView extends FragmentActivity implements OnMapReadyCallback,
             @Override
             protected void onClickConfirmed(View v, Marker marker) {
                 Restaurant restaurant = markerRestaurantMap.get(marker.getId());
-                RestaurantInfoDialog fragment1 = new RestaurantInfoDialog();
-                fragment1.restaurant = restaurant;
+                RestaurantInfoDialog fragment1 = new RestaurantInfoDialog(restaurant);
                 fragment1.show(getFragmentManager(), "");
             }
         };

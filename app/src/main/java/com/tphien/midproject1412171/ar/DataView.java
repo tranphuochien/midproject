@@ -302,8 +302,7 @@ public class DataView {
                                     _context.startActivity(intent);
                                 }
                                 else {
-									RestaurantInfoDialog fragment1 = new RestaurantInfoDialog();
-									fragment1.restaurant = locations.get(id);
+									RestaurantInfoDialog fragment1 = new RestaurantInfoDialog(locations.get(id));
 									fragment1.show(fragmentManager, "");
 
                                 }

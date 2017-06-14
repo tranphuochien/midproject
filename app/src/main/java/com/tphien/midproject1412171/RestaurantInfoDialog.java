@@ -30,39 +30,28 @@ import java.io.File;
 import java.util.Objects;
 
 public class RestaurantInfoDialog extends DialogFragment {
-    public Restaurant restaurant;
-    private RestaurantProfileBinding binding;
+    private Restaurant restaurant;
+
+    private RestaurantInfoDialog() {}
+
+    public RestaurantInfoDialog(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         Log.d("dialog", "onCreateView");
         super.onCreateView(inflater, container, savedInstanceState);
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.restaurant_profile, container, false);
+        RestaurantProfileBinding binding = DataBindingUtil.inflate(inflater, R.layout.restaurant_profile, container, false);
         View view = binding.getRoot();
         binding.setRestaurant(restaurant);
 
         ((TextView)view.findViewById(R.id.tvRating)).setText(String.format("Rating: %d", restaurant.getRating()));
-        return view;
-    }
 
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Log.d("dialog", "onCreateDialog");
-        final Dialog dialog = new Dialog(getActivity());
-        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        dialog.setContentView(R.layout.restaurant_profile);
-
-
-        //dialog.setContentView(binding.getRoot());
-        dialog.getWindow().setBackgroundDrawable(
-                new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
-
-        ImageView header = (ImageView) dialog.findViewById(R.id.header_cover_image);
-        ImageView favourite = (ImageView) dialog.findViewById(R.id.add_friend);
+        ImageView header = (ImageView) view.findViewById(R.id.header_cover_image);
+        ImageView favourite = (ImageView) view.findViewById(R.id.add_friend);
 
 
         Glide.with(getActivity().getApplicationContext())
@@ -93,7 +82,7 @@ public class RestaurantInfoDialog extends DialogFragment {
                     .into(favourite);
         }
 
-        ((ImageView)dialog.findViewById(R.id.btnShare)).setOnClickListener(new View.OnClickListener() {
+        ((ImageView)view.findViewById(R.id.btnShare)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 File file = new File("jj");
@@ -106,7 +95,7 @@ public class RestaurantInfoDialog extends DialogFragment {
             }
         });
 
-        ((ImageView)dialog.findViewById(R.id.CallBut)).setOnClickListener(new View.OnClickListener() {
+        ((ImageView)view.findViewById(R.id.CallBut)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Uri number = Uri.parse("tel: " + restaurant.getPhoneNumber());
@@ -126,7 +115,7 @@ public class RestaurantInfoDialog extends DialogFragment {
             }
         });
 
-        ((ImageView)dialog.findViewById(R.id.cancelBtn)).setOnClickListener(new View.OnClickListener() {
+        ((ImageView)view.findViewById(R.id.cancelBtn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
@@ -134,7 +123,7 @@ public class RestaurantInfoDialog extends DialogFragment {
         });
 
 
-        ((ImageView)dialog.findViewById(R.id.SmsBut)).setOnClickListener(new View.OnClickListener() {
+        ((ImageView)view.findViewById(R.id.SmsBut)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -145,7 +134,7 @@ public class RestaurantInfoDialog extends DialogFragment {
             }
         });
 
-        ((ImageView)dialog.findViewById(R.id.EmailBut)).setOnClickListener(new View.OnClickListener() {
+        ((ImageView)view.findViewById(R.id.EmailBut)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -156,7 +145,7 @@ public class RestaurantInfoDialog extends DialogFragment {
             }
         });
 
-        ((ImageView)dialog.findViewById(R.id.add_friend)).setOnClickListener(new View.OnClickListener() {
+        ((ImageView)view.findViewById(R.id.add_friend)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ImageView imageView = (ImageView)v.findViewById(R.id.add_friend);
@@ -185,7 +174,7 @@ public class RestaurantInfoDialog extends DialogFragment {
             }
         });
 
-        ((ImageView)dialog.findViewById(R.id.btnMap)).setOnClickListener(new View.OnClickListener() {
+        ((ImageView)view.findViewById(R.id.btnMap)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -195,7 +184,7 @@ public class RestaurantInfoDialog extends DialogFragment {
             }
         });
 
-        ((ImageView)dialog.findViewById(R.id.DirectionBut)).setOnClickListener(new View.OnClickListener() {
+        ((ImageView)view.findViewById(R.id.DirectionBut)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), FindPath.class);
@@ -207,6 +196,23 @@ public class RestaurantInfoDialog extends DialogFragment {
                 startActivity(intent);
             }
         });
+        return view;
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Log.d("dialog", "onCreateDialog");
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        dialog.setContentView(R.layout.restaurant_profile);
+
+
+        //dialog.setContentView(binding.getRoot());
+        dialog.getWindow().setBackgroundDrawable(
+                new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
 
         return dialog;
     }

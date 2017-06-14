@@ -112,8 +112,7 @@ public class LocationAdapter3d extends ArrayAdapter {
             btnDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    RestaurantInfoDialog fragment1 = new RestaurantInfoDialog();
-                    fragment1.restaurant = (Restaurant) getItem(position);
+                    RestaurantInfoDialog fragment1 = new RestaurantInfoDialog((Restaurant) getItem(position));
                     fragment1.show(fragmentManager, "");
                 }
             });
