@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment implements onRadiusChangeListener {
     private TextView tvResult;
     private ImageView curLocation;
     private FragmentManager fragmentManager;
-    static final String LINK_REQUEST = "http://group9cntn.me/data_restaurants.json";
+    static final String LINK_REQUEST = "http://www.vneasyrider.com/data_restaurants.json";
 
     public HomeFragment() {}
 
